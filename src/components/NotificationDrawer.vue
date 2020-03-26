@@ -6,9 +6,10 @@
         </v-list-item>
         <v-divider/>
         <v-fade-transition group mode="in-out">
-            <template v-for="notification in notifications" >
-                <v-alert :key="notification.id" :type="notification.type" border="left" class="mx-2" colored-border
-                         dense dismissible transition="slide-y-transition" @input="(val) => {if (val === false) removeNotification(notification.id)}">
+            <template v-for="notification in notifications">
+                <v-alert :key="notification.id" :type="notification.type" @input="(val) => {if (val === false) removeNotification(notification.id)}" border="left" class="mx-2"
+                         colored-border dense dismissible
+                         transition="slide-y-transition">
                     {{notification.message}}
                 </v-alert>
             </template>
@@ -22,7 +23,7 @@
         props: {
             value: Boolean
         },
-        data() {
+        data () {
             return {
                 notifications: [
                     {
@@ -54,12 +55,14 @@
             }
         },
         methods: {
-            handleInput(value) {
-                this.$emit('input', value);
+            handleInput ( value ) {
+                this.$emit( 'input', value );
             },
-            removeNotification(id) {
-                this.notifications = this.notifications.filter(notification => {return notification.id !== id});
-                console.log(id);
+            removeNotification ( id ) {
+                this.notifications = this.notifications.filter( notification => {
+                    return notification.id !== id
+                } );
+                console.log( id );
             }
         }
     }

@@ -1,11 +1,11 @@
 const utils = {
-    setPageTitle: (title) => {
-        document.title = `${title} | PMS`;
+    setPageTitle: ( title ) => {
+        document.title = `${ title } | PMS`;
     }
 };
 
 export default {
-    install(Vue) {
+    install ( Vue ) {
         Vue.prototype.$utils = utils;
     }
 }

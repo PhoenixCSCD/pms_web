@@ -1,15 +1,15 @@
 <template>
-    <v-navigation-drawer :expand-on-hover="value" :v-model="true" app clipped color="grey darken-3" dark permanent>
+    <v-navigation-drawer :expand-on-hover='value' :v-model='true' app clipped color='grey darken-3' dark permanent>
         <v-list-item>
             <v-list-item-icon>
-                <v-icon @click="() => {handleInput(!value)}">mdi-menu</v-icon>
+                <v-icon @click='() => {handleInput(!value)}'>mdi-menu</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Navigation</v-list-item-title>
         </v-list-item>
 
-        <template v-for="section in sections">
-            <v-divider :key="section.title"/>
-            <v-list-item :key="item.title" :to="item.path" class="white--text" v-for="item in section.items">
+        <template v-for='section in sections'>
+            <v-divider :key='section.title'/>
+            <v-list-item :key='item.title' :to='item.path' class='white--text' v-for='item in section.items'>
                 <v-list-item-icon>
                     <v-icon>{{item.icon}}</v-icon>
                 </v-list-item-icon>
@@ -22,75 +22,75 @@
 
 <script>
     export default {
-        name: "NavigationDrawer",
+        name: 'NavigationDrawer',
         props: {
             value: Boolean
         },
-        data() {
+        data () {
             return {
                 sections: [
                     {
-                        title: "transactions",
+                        title: 'transactions',
                         items: [
                             {
                                 title: 'Dashboard',
                                 icon: 'mdi-speedometer',
-                                path: {name: 'dashboard'}
+                                path: { name: 'dashboard' }
                             },
                             {
                                 title: 'Dispensary',
                                 icon: 'mdi-clipboard-text-outline',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                             {
                                 title: 'Purchase Order',
                                 icon: 'mdi-clipboard-outline',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                             {
                                 title: 'Stock Adjustment',
                                 icon: 'mdi-book-open-outline',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                             {
                                 title: 'Expired Drugs',
                                 icon: 'mdi-pill',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                         ]
                     },
                     {
-                        title: "setups",
+                        title: 'setups',
                         items: [
                             {
                                 title: 'Drugs',
                                 icon: 'mdi-pill',
-                                path: {name: 'list-drugs'}
+                                path: { name: 'list-drugs' }
                             },
                             {
                                 title: 'Users',
                                 icon: 'mdi-account-group-outline',
-                                path: {name: 'login'}
+                                path: { name: 'list-users' }
                             },
                             {
                                 title: 'Suppliers',
                                 icon: 'mdi-account-group',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                         ]
                     },
                     {
-                        title: "add-ons",
+                        title: 'add-ons',
                         items: [
                             {
                                 title: 'Mail',
                                 icon: 'mdi-mail',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                             {
                                 title: 'Calender',
                                 icon: 'mdi-mail',
-                                path: {name: 'login'}
+                                path: { name: 'login' }
                             },
                         ]
                     }
@@ -98,8 +98,8 @@
             }
         },
         methods: {
-            handleInput(value) {
-                this.$emit('input', value)
+            handleInput ( value ) {
+                this.$emit( 'input', value )
             }
         }
     }

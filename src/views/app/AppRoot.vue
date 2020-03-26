@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar app color="primary" dark clipped-left>
+        <v-app-bar app clipped-left color="primary" dark>
             <!--            <v-app-bar-nav-icon @click="navigationDrawer = !navigationDrawer"/>-->
             <v-toolbar-title>PMS</v-toolbar-title>
             <v-spacer/>
@@ -23,15 +23,15 @@
 
     export default {
         name: 'AppRoot',
-        components: {NavigationDrawer, NotificationDrawer},
-        data() {
+        components: { NavigationDrawer, NotificationDrawer },
+        data () {
             return {
                 navigationDrawer: true,
                 notificationDrawer: true
             }
         },
-        mounted() {
-            this.$utils.setPageTitle('App Root');
+        mounted () {
+            this.$utils.setPageTitle( 'App Root' );
         }
     }
 </script>
