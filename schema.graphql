@@ -1,0 +1,149 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: RootQuery
+    mutation: RootMutation
+}
+
+type AddBranch {
+    branch: BranchType
+}
+
+type AddGroup {
+    group: GroupType
+}
+
+type AddUser {
+    user: UserType
+}
+
+type AddUserBranchesMutation {
+    user: UserType
+}
+
+type AuthDataType {
+    avatar: String
+    branches: [BranchType!]!
+    dateOfBirth: Date!
+    email: String!
+    firstName: String!
+    gender: UserGender!
+    "The groups this user belongs to. A user will get all permissions granted to each of their groups."
+    groups: [GroupType!]!
+    id: UUID!
+    isStaff: Boolean!
+    "Designates that this user has all permissions without explicitly assigning them."
+    isSuperuser: Boolean!
+    lastLogin: DateTime
+    lastName: String!
+    phoneNumber: String!
+    token: String
+    "Specific permissions for this user."
+    userPermissions: [PermissionType!]!
+}
+
+type BranchType {
+    id: UUID!
+    name: String!
+    users: [UserType!]!
+}
+
+type DeleteGroup {
+    group: GroupType
+}
+
+type DeleteGroups {
+    groups: [GroupType]
+}
+
+type EditGroup {
+    group: GroupType
+}
+
+type GroupType {
+    id: ID!
+    name: String!
+    permissions: [PermissionType!]!
+    "The groups this user belongs to. A user will get all permissions granted to each of their groups."
+    userSet: [UserType!]!
+}
+
+type PermissionType {
+    codename: String!
+    groupSet: [GroupType!]!
+    id: ID!
+    name: String!
+    "Specific permissions for this user."
+    userSet: [UserType!]!
+}
+
+type RootMutation {
+    addBranch(name: String): AddBranch
+    addGroup(name: String, permissions: [Int]): AddGroup
+    addUser(avatar: String, dateOfBirth: Date, email: String, firstName: String, gender: String, groups: [Int], lastName: String, phoneNumber: String): AddUser
+    addUserBranches(branches: [UUID], userId: UUID): AddUserBranchesMutation
+    deleteGroup(id: Int): DeleteGroup
+    deleteGroups(ids: [Int]): DeleteGroups
+    editGroup(id: Int, name: String, permissions: [Int]): EditGroup
+}
+
+type RootQuery {
+    authData(email: String, password: String): AuthDataType
+    branches: [BranchType]
+    groupById(id: Int): GroupType
+    groups: [GroupType]
+    permissions: [PermissionType]
+    userByEmail(email: String): UserType
+    userById(id: UUID): UserType
+    users: [UserType]
+}
+
+type UserType {
+    avatar: String
+    branches: [BranchType!]!
+    dateOfBirth: Date!
+    email: String!
+    firstName: String!
+    gender: UserGender!
+    "The groups this user belongs to. A user will get all permissions granted to each of their groups."
+    groups: [GroupType!]!
+    id: UUID!
+    isStaff: Boolean!
+    "Designates that this user has all permissions without explicitly assigning them."
+    isSuperuser: Boolean!
+    lastLogin: DateTime
+    lastName: String!
+    password: String!
+    phoneNumber: String!
+    "Specific permissions for this user."
+    userPermissions: [PermissionType!]!
+}
+
+"An enumeration."
+enum UserGender {
+    "Female"
+    F
+    "Male"
+    M
+}
+
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""
+Leverages the internal Python implmeentation of UUID (uuid.UUID) to provide native UUID objects
+in fields, resolvers and input.
+"""
+scalar UUID
+
+"""
+The `Date` scalar type represents a Date
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar Date

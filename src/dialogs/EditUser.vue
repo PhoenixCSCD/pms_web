@@ -2,7 +2,7 @@
     <v-dialog :value="value" persistent width="800">
         <v-card>
             <v-card-title>
-                Add User
+                Edit User
                 <v-spacer/>
                 <v-btn @click="hideDialog" color="red" icon>
                     <v-icon>mdi-close</v-icon>
@@ -74,11 +74,9 @@
                         <v-col>
                             <v-layout align-center column fill-height justify-center>
                                 <v-flex class="d-flex align-center">
-                                    <input @change="handleAvatarChange" class="hidden-file-input" id="avatar"
-                                           name="avatar"
-                                           type="file"/>
+                                    <input class="hidden-file-input" id="avatar" name="avatar" type="file"/>
                                     <label for="avatar" style="display: inline; border-radius: 100%">
-                                        <n-avatar :image="user.avatar" :loading="uploadingAvatar"/>
+                                        <n-avatar :image="user.avatar"/>
                                     </label>
                                 </v-flex>
                                 <v-flex>
@@ -100,25 +98,26 @@
 </template>
 
 <script>
-    import {GENDER} from '@/options'
     import {ADD_USER} from '@/graphql/mutations';
-    import {GROUPS} from '@/graphql/queries';
+    import {GROUPS, USER} from '@/graphql/queries';
+    import {GENDER} from '@/options';
     import NAvatar from '@/components/NAvatar';
 
     export default {
-        name: 'AddUser',
+        name: 'EditUser',
         components: { NAvatar },
         props: {
             value: {
                 type: Boolean,
                 required: true
+            },
+            userId: {
+                type: String,
+                required: true,
             }
         },
         data: function () {
             return {
-                genderOptions: GENDER || [],
-                groups: [],
-                uploadingAvatar: false,
                 user: {
                     firstName: '',
                     lastName: '',
@@ -129,9 +128,9 @@
                     phoneNumber: '',
                     avatar: ''
                 },
-                temp: {
-                    avatarId: '',
-                }
+
+                genderOptions: GENDER || [],
+                groups: []
             }
         },
         computed: {
@@ -151,7 +150,6 @@
                 this.$emit( 'input', value )
             },
             hideDialog: function () {
-                this.$refs.form.reset();
                 this.handleInput( false );
             },
             handleSubmit: function () {
@@ -160,23 +158,20 @@
                         this.$emit( 'after-submit' );
                         this.hideDialog();
                     } )
-            },
-            handleAvatarChange: function ( e ) {
-                this.uploadingAvatar = true;
-                if ( this.user.avatar ) {
-                    this.$utils.imageKit.delete( this.user.avatar )
-                        .then( val => val ? 'True oh' : 'Na lie' )
-                }
-                this.$utils.imageKit.upload( e.target.files[0] )
-                    .then( data => {
-                        this.user.avatar = data.url;
-                        this.temp.avatarId = data.fileId;
-                        this.uploadingAvatar = false;
-                    } )
             }
         },
         apollo: {
-            groups: GROUPS
+            user: {
+                query: USER,
+                update: data => data['userById'],
+                skip: function () {
+                    return !this.userId
+                },
+                variables: function () {
+                    return { id: this.userId }
+                }
+            },
+            groups: GROUPS,
         }
     }
 </script>

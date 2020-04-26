@@ -6,11 +6,11 @@
                 <v-icon v-else>mdi-disc</v-icon>
             </v-btn>
         </template>
-        <v-btn @click="handleAddClick" color="indigo" dark fab small>
-            <v-icon>mdi-plus</v-icon>
+        <v-btn :disabled="addDisabled" @click="handleAddClick" color="indigo" fab small>
+            <v-icon color="white">mdi-plus</v-icon>
         </v-btn>
-        <v-btn @click="handleDelClick" color="red" dark fab small>
-            <v-icon>mdi-delete</v-icon>
+        <v-btn :disabled="delDisabled" @click="handleDelClick" color="red" fab small>
+            <v-icon color="white">mdi-delete</v-icon>
         </v-btn>
     </v-speed-dial>
 </template>
@@ -18,6 +18,16 @@
 <script>
     export default {
         name: "AddDelSpeedDial",
+        props: {
+            addDisabled: {
+                type: Boolean,
+                default: false
+            },
+            delDisabled: {
+                type: Boolean,
+                default: false
+            }
+        },
         data () {
             return {
                 speedDial: true

@@ -7,7 +7,9 @@
         <v-divider/>
         <v-fade-transition group mode="in-out">
             <template v-for="notification in notifications">
-                <v-alert :key="notification.id" :type="notification.type" @input="(val) => {if (val === false) removeNotification(notification.id)}" border="left" class="mx-2"
+                <v-alert :key="notification.id" :type="notification.type"
+                         @input="(val) => {if (val === false) removeNotification(notification.id)}" border="left"
+                         class="mx-2"
                          colored-border dense dismissible
                          transition="slide-y-transition">
                     {{notification.message}}

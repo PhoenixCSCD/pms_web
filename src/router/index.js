@@ -6,6 +6,7 @@ import AppRoot from '@/views/app/AppRoot'
 import Dashboard from '@/views/app/Dashboard'
 import ListDrugs from '@/views/app/ListDrugs'
 import ListUsers from '@/views/app/ListUsers'
+import ListGroups from '@/views/app/ListGroups';
 
 Vue.use( VueRouter );
 
@@ -41,6 +42,11 @@ const routes = [
                 path: 'users',
                 name: 'list-users',
                 component: ListUsers
+            },
+            {
+                path: 'groups',
+                name: 'list-groups',
+                component: ListGroups
             }
         ]
     },

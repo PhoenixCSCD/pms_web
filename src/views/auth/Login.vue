@@ -1,6 +1,7 @@
 <template>
-    <v-flex class="xs12 md5 lg3">
-        <v-card class="pa-12" outlined>
+    <v-row justify="center">
+        <v-col md="4" lg="3">
+        <v-card class="py-6 px-6" outlined>
             <v-card-title class="justify-center">Login</v-card-title>
             <v-card-text>
                 <v-form @submit.prevent="handleSubmit">
@@ -17,7 +18,8 @@
                 </v-form>
             </v-card-text>
         </v-card>
-    </v-flex>
+        </v-col>
+    </v-row>
 </template>
 
 <script>
@@ -38,7 +40,7 @@
                 this.$graphql.queries.getAuthData( this.credentials )
                     .then( data => {
                         localStorage.setItem( 'authData', JSON.stringify( data.authData ) );
-                        this.$router.push( { name: 'app' } )
+                        this.$router.push( { name: 'list-users' } )
                     } )
             }
         },
