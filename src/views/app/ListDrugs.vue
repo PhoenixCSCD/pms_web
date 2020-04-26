@@ -2,9 +2,9 @@
     <v-layout class="justify-center align-center py-12">
         <v-flex class="md7">
             <v-card outlined>
-                <v-data-table :items="groups" :headers="tableHeaders" show-select caption="Drugs" item-key="id">
+                <v-data-table :headers="tableHeaders" :items="groups" caption="Drugs" item-key="id" show-select>
                     <template v-slot:item.actions="{}">
-                        <v-btn icon color="orange">
+                        <v-btn color="orange" icon>
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
                         <v-btn icon>
@@ -26,27 +26,25 @@
         components: {
             AddDelSpeedDial,
         },
-        data() {
+        data () {
             return {
                 fab: true,
                 groups: [],
                 tableHeaders: [
-                    {text: 'name', value: 'name'},
+                    { text: 'name', value: 'name' },
                     // {text: 'Price (GHS)', value: 'price'},
-                    {text: 'Actions', value: 'actions'}
+                    { text: 'Actions', value: 'actions' }
                 ],
                 drugs: []
             }
         },
         methods: {
             handleAddClick: () => {
-                console.log('Add clicked');
             },
             handleDelClick: () => {
-                console.log('Del Clicked');
             }
         },
-        mounted() {
+        mounted () {
         }
     }
 </script>

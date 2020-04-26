@@ -4,14 +4,18 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import utils from '@/plugins/utils'
+import {createProvider} from './vue-apollo'
+import topBar from '@/plugins/topBar';
 
 Vue.config.productionTip = false;
 
-Vue.use(utils);
+Vue.use( utils );
+Vue.use( topBar );
 
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app');
+new Vue( {
+    router,
+    store,
+    vuetify,
+    apolloProvider: createProvider(),
+    render: h => h( App )
+} ).$mount( '#app' );
