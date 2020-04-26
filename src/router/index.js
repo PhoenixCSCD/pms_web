@@ -12,6 +12,11 @@ Vue.use( VueRouter );
 
 const routes = [
     {
+        path: '/',
+        name: 'home',
+        redirect: {name: 'login'}
+    },
+    {
         path: '/auth',
         name: 'auth',
         component: AuthRoot,
