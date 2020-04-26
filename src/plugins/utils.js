@@ -22,9 +22,9 @@ const utils = {
                     fileName: file.name,
                     tags: [ 'pms' ]
                 }, ( err, response ) => {
-                    if ( err ) console.log( err );
+                    if ( err )  alert(err);
 
-                    else resolve( { url: response.url, fileId: response.fileId } )
+                    resolve( { url: response.url, fileId: response.fileId } )
                 } )
             } );
         },
@@ -36,10 +36,10 @@ const utils = {
         },
         delete: ( url ) => {
             return new Promise( resolve => {
-                imageKit.deleteFile( url, ( err ) => {
-                    if ( err ) console.log( err );
+                imageKit.deleteFile( url, ( ) => {
+                    // if ( err ) console.log( err );
 
-                    else resolve( true );
+                    resolve( true );
                 } )
             } )
         }

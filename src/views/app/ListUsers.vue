@@ -72,8 +72,7 @@
                 this.activeUserId = userId;
                 this.editDialog = true;
             },
-            handleDeleteClick: function ( userId ) {
-                console.log( 'Deletes user with ID ' + userId );
+            handleDeleteClick: function ( ) {
             },
             handleItemSelected: function ( e ) {
                 if ( e.value )
@@ -102,7 +101,6 @@
                 this.addDialog = true;
             } );
             this.$topBar.eventBus.$on( 'deleteClick', () => {
-                console.log( 'Delete Clicked' )
             } );
         },
         apollo: {

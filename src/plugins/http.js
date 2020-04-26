@@ -41,7 +41,6 @@ const http = Axios.create( {
 
 http.interceptors.request.use( request => {
     const authData = JSON.parse( localStorage.getItem( 'authData' ) );
-    console.log( authData );
 
     if ( authData )
         request.headers['Authorization'] = `Bearer ${ authData.token }`;

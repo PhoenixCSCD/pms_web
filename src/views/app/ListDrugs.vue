@@ -40,14 +40,11 @@
         },
         methods: {
             handleAddClick: () => {
-                console.log( 'Add clicked' );
             },
             handleDelClick: () => {
-                console.log( 'Del Clicked' );
             }
         },
         mounted () {
-            this.$graphql.query( '{groups {name, id}}' ).then( data => console.log( data ) );
         }
     }
 </script>

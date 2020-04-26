@@ -88,7 +88,6 @@
             }
         },
         mounted () {
-            console.log( this.userId );
         },
         apollo: {
             user: {

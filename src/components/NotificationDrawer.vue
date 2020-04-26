@@ -64,7 +64,6 @@
                 this.notifications = this.notifications.filter( notification => {
                     return notification.id !== id
                 } );
-                console.log( id );
             }
         }
     }
