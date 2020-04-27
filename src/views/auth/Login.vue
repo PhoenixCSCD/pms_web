@@ -24,6 +24,8 @@
 
 <script>
 
+    import {AUTH_DATA} from '@/graphql/queries';
+
     export default {
         name: 'Login',
         components: {},
@@ -37,9 +39,9 @@
         },
         methods: {
             handleSubmit () {
-                this.$graphql.queries.getAuthData( this.credentials )
+                this.$apollo.query({query: AUTH_DATA, variables: this.credentials})
                     .then( data => {
-                        localStorage.setItem( 'authData', JSON.stringify( data.authData ) );
+                        localStorage.setItem( 'authData', JSON.stringify( data ) );
                         this.$router.push( { name: 'list-users' } )
                     } )
             }
