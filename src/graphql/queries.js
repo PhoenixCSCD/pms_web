@@ -1,5 +1,15 @@
 import gql from 'graphql-tag'
 
+
+export const AUTH_DATA = gql`query ($email: String!, $password: String!){
+    authData(email: $email, password: $password) {
+        id
+        firstName
+        lastName
+        token
+    }
+}`;
+
 export const USERS = gql`{
     users {
         id
@@ -35,16 +45,16 @@ export const GROUPS = gql`{
     }
 }`;
 
-export const GROUPS_WITH_PERMISSIONS = gql`{
-    groups {
-        id
-        name
-        permissions {
-            id
-            name
-        }
-    }
-}`;
+// export const GROUPS_WITH_PERMISSIONS = gql`{
+//     groups {
+//         id
+//         name
+//         permissions {
+//             id
+//             name
+//         }
+//     }
+// }`;
 
 export const PERMISSIONS = gql`{
     permissions {
