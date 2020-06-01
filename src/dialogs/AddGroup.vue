@@ -1,15 +1,8 @@
 <template>
-    <v-dialog :value="value" persistent width="500">
-        <v-card>
-            <v-card-title>
-                Add Group
-                <v-spacer/>
-                <v-btn @click="hideDialog" color="red" icon>
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-            </v-card-title>
-            <v-divider/>
-            <v-form @submit.prevent="handleSubmit" ref="form">
+    <y-dialog :value="value" @input="handleInput" persistent width="500">
+        <template v-slot:title>Add Group</template>
+        <template slot-scope="props">
+            <v-form @submit.prevent="() => handleSubmit(props.closeDialog)" ref="form">
                 <v-card-text>
                     <v-row>
                         <v-col>
@@ -27,13 +20,13 @@
                 </v-card-text>
                 <v-divider/>
                 <v-card-actions>
-                    <v-btn @click="hideDialog" color="red" dark outlined>Cancel</v-btn>
+                    <v-btn @click="props.closeDialog" color="red" dark outlined>Cancel</v-btn>
                     <v-spacer/>
                     <v-btn color="primary" type="submit">Save</v-btn>
                 </v-card-actions>
             </v-form>
-        </v-card>
-    </v-dialog>
+        </template>
+    </y-dialog>
 </template>
 
 <script>
@@ -55,19 +48,20 @@
             }
         },
         methods: {
-            handleInput: function ( value ) {
-                this.$emit( 'input', value )
+            handleInput: function (value) {
+                this.$emit('input', value)
             },
             hideDialog: function () {
                 this.$refs.form.reset();
-                this.handleInput( false );
+                this.handleInput(false);
             },
-            handleSubmit: function () {
-                this.$apollo.mutate( { mutation: ADD_GROUP, variables: this.group } )
-                    .then( () => {
-                        this.$emit( 'after-submit' );
-                        this.hideDialog();
-                    } )
+            handleSubmit: function (callback) {
+                this.$apollo.mutate({mutation: ADD_GROUP, variables: this.group})
+                    .then(() => {
+                        this.$refs.form.reset();
+                        this.$emit('after-submit');
+                        callback();
+                    })
             }
         },
         apollo: {

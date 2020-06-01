@@ -1,53 +1,47 @@
-import ImageKit from 'imagekit-javascript'
 import store from '@/store';
+import axios from 'axios';
+import {createClient} from "@/vue-apollo";
+import {HAS_PERMISSION} from "@/graphql/queries";
 
-const imageKit = new ImageKit( {
-    publicKey: "public_7/xIjAxG2LvxezZFcU5XVjHQv50=",
-    // privateKey: 'private_7zgXhRBx6JkdbiffUrT6Iz+RC70=',
-    urlEndpoint: "https://ik.imagekit.io/quava",
-    authenticationEndpoint: "http://localhost:8000/core/image-kit-signature/"
-} );
-
+const apolloClient = createClient();
 const utils = {
-    setPageTitle: ( title ) => {
-        document.title = `${ title } | PMS`;
-        store.commit( 'setPageTitle', title );
+    setPageTitle: (title) => {
+        document.title = `${title} | PMS`;
+        store.commit('setPageTitle', title);
     },
-    imageKit: {
-        upload: ( file ) => {
-            return new Promise( ( resolve ) => {
+    uploadImage: (oldImage, image) => {
+        const formData = new FormData();
+        formData.append('oldImage', oldImage)
+        formData.append('image', image)
 
-                imageKit.upload( {
-                    file: file,
-                    fileName: file.name,
-                    tags: [ 'pms' ]
-                }, ( err, response ) => {
-                    if ( err )  alert(err);
-
-                    resolve( { url: response.url, fileId: response.fileId } )
-                } )
-            } );
-        },
-        transform: ( src, transformation ) => {
-            return imageKit.url( {
-                src: src,
-                transformation: transformation
-            } )
-        },
-        delete: ( url ) => {
-            return new Promise( resolve => {
-                imageKit.deleteFile( url, ( ) => {
-                    // if ( err ) console.log( err );
-
-                    resolve( true );
-                } )
-            } )
+        const headers = {
+            'Content-Type': 'multipart/form-data'
         }
+        return new Promise(((resolve, reject) => {
+            axios.post('http://localhost:8000/upload-image/', formData, {headers})
+                .then(response => {
+                    resolve(response.data.image);
+                })
+                .catch(() => {
+                    reject('Error Upload file');
+                });
+        }));
+    },
+    hasPermission: (permission) => {
+        apolloClient.query({query: HAS_PERMISSION, variables: {permission}});
+    },
+    getCurrentDateFormatted: function () {
+        const now = new Date();
+        return `${now.getFullYear()}-${now.getMonth() < 10 ? `0${now.getMonth()}` : now.getMonth()}-${now.getDate() < 10 ? `0${now.getDate()}` : now.getDate()}`;
+        },
+    getCurrentTimeFormatted: function () {
+        const now = new Date();
+        return `${now.getHours()}:${now.getMinutes()}`;
     }
 };
 
 export default {
-    install ( Vue ) {
+    install(Vue) {
         Vue.prototype.$utils = utils;
     }
 }

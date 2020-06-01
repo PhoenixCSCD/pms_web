@@ -1,4 +1,5 @@
 <template>
+    <permission>
     <div>
         <h1>{{count}}</h1>
         <v-btn @click="reduce" color="indigo" dark icon>
@@ -8,6 +9,7 @@
             <v-icon>mdi-plus</v-icon>
         </v-btn>
     </div>
+    </permission>
 </template>
 
 <script>

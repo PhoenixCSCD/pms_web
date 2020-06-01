@@ -25,7 +25,7 @@
         props: {
             value: Boolean
         },
-        data () {
+        data() {
             return {
                 notifications: [
                     {
@@ -57,13 +57,13 @@
             }
         },
         methods: {
-            handleInput ( value ) {
-                this.$emit( 'input', value );
+            handleInput(value) {
+                this.$emit('input', value);
             },
-            removeNotification ( id ) {
-                this.notifications = this.notifications.filter( notification => {
+            removeNotification(id) {
+                this.notifications = this.notifications.filter(notification => {
                     return notification.id !== id
-                } );
+                });
             }
         }
     }

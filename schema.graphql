@@ -3,10 +3,19 @@
 schema {
     query: RootQuery
     mutation: RootMutation
+    subscription: RootSubscription
+}
+
+type AddAllergy {
+    allergy: AllergyType
 }
 
 type AddBranch {
     branch: BranchType
+}
+
+type AddDrug {
+    drug: DrugType
 }
 
 type AddGroup {
@@ -19,6 +28,11 @@ type AddUser {
 
 type AddUserBranchesMutation {
     user: UserType
+}
+
+type AllergyType {
+    id: UUID!
+    name: String!
 }
 
 type AuthDataType {
@@ -37,6 +51,8 @@ type AuthDataType {
     lastLogin: DateTime
     lastName: String!
     phoneNumber: String!
+    saleSet: [SaleType!]!
+    supplySet: [SupplyType!]!
     token: String
     "Specific permissions for this user."
     userPermissions: [PermissionType!]!
@@ -45,7 +61,7 @@ type AuthDataType {
 type BranchType {
     id: UUID!
     name: String!
-    users: [UserType!]!
+    users: [AuthDataType!]!
 }
 
 type DeleteGroup {
@@ -54,6 +70,16 @@ type DeleteGroup {
 
 type DeleteGroups {
     groups: [GroupType]
+}
+
+type DrugType {
+    costPricePerPack: Float!
+    id: UUID!
+    name: String!
+    quantityPerPack: Int!
+    salelineSet: [SaleLineType!]!
+    sellingPrice: Float!
+    supplylineSet: [SupplyLineType!]!
 }
 
 type EditGroup {
@@ -65,7 +91,14 @@ type GroupType {
     name: String!
     permissions: [PermissionType!]!
     "The groups this user belongs to. A user will get all permissions granted to each of their groups."
-    userSet: [UserType!]!
+    userSet: [AuthDataType!]!
+}
+
+"Obtain JSON Web Token mutation"
+type ObtainJSONWebToken {
+    payload: GenericScalar!
+    refreshExpiresIn: Int!
+    token: String!
 }
 
 type PermissionType {
@@ -74,28 +107,108 @@ type PermissionType {
     id: ID!
     name: String!
     "Specific permissions for this user."
-    userSet: [UserType!]!
+    userSet: [AuthDataType!]!
+}
+
+type RecordSale {
+    sale: SaleType
+}
+
+type RecordSupply {
+    supply: SupplyType
+}
+
+type Refresh {
+    payload: GenericScalar!
+    refreshExpiresIn: Int!
+    token: String!
+}
+
+type Revoke {
+    revoked: Int!
 }
 
 type RootMutation {
+    addAllergy(name: String): AddAllergy
     addBranch(name: String): AddBranch
+    addDrug(costPricePerPack: Decimal, name: String, quantityPerPack: Int, sellingPrice: Decimal): AddDrug
     addGroup(name: String, permissions: [Int]): AddGroup
     addUser(avatar: String, dateOfBirth: Date, email: String, firstName: String, gender: String, groups: [Int], lastName: String, phoneNumber: String): AddUser
     addUserBranches(branches: [UUID], userId: UUID): AddUserBranchesMutation
-    deleteGroup(id: Int): DeleteGroup
-    deleteGroups(ids: [Int]): DeleteGroups
+    deleteGroup(groupId: Int): DeleteGroup
+    deleteGroups(groupIds: [Int]): DeleteGroups
     editGroup(id: Int, name: String, permissions: [Int]): EditGroup
+    "Obtain JSON Web Token mutation"
+    obtainToken(email: String!, password: String!): ObtainJSONWebToken
+    recordSale(discount: Decimal!, saleLines: [SaleLineInputType], timestamp: DateTime!): RecordSale
+    recordSupply(discount: Decimal!, freightCharge: Decimal!, supplier: String!, supplyDate: Date!, supplyLines: [SupplyLineInput]!, vat: Decimal!): RecordSupply
+    refreshToken(token: String): Refresh
+    revokeToken(refreshToken: String): Revoke
+    verifyPasswordResetToken(token: String!, userId: UUID!): VerifyPasswordResetToken
+    verifyToken(token: String): Verify
 }
 
 type RootQuery {
-    authData(email: String, password: String): AuthDataType
+    allergies: [AllergyType]
     branches: [BranchType]
-    groupById(id: Int): GroupType
+    drugs: [DrugType]
+    groupById(groupId: Int): GroupType
     groups: [GroupType]
+    hasPermission(permission: String): Boolean
+    me: UserType
     permissions: [PermissionType]
+    sales: [SaleType]
+    stockLevel(drugId: UUID!, lotNumber: String): Int
+    supplies: [SupplyType]
     userByEmail(email: String): UserType
-    userById(id: UUID): UserType
+    userById(userId: UUID): UserType
     users: [UserType]
+}
+
+type RootSubscription {
+    hello: String
+    stockLevel(drugId: UUID!): Int
+}
+
+type SaleLineType {
+    drug: DrugType!
+    id: UUID!
+    quantity: Int!
+    sale: SaleType!
+    sellingPrice: Float!
+}
+
+type SaleType {
+    attendant: AuthDataType!
+    discount: Float!
+    grandTotal: Float!
+    id: UUID!
+    saleLines: [SaleLineType!]!
+    subTotal: Float!
+    timestamp: DateTime!
+}
+
+type SupplyLineType {
+    costPrice: Float!
+    drug: DrugType!
+    expiryDate: Date!
+    id: UUID!
+    lotNumber: String!
+    quantity: Int!
+    supply: SupplyType!
+}
+
+type SupplyType {
+    discount: Float!
+    freightCharge: Float!
+    grandTotal: Float!
+    id: UUID!
+    receiver: AuthDataType!
+    subTotal: Float!
+    supplier: String!
+    supplyDate: Date!
+    supplyLines: [SupplyLineType!]!
+    vat: Float!
 }
 
 type UserType {
@@ -115,8 +228,18 @@ type UserType {
     lastName: String!
     password: String!
     phoneNumber: String!
+    saleSet: [SaleType!]!
+    supplySet: [SupplyType!]!
     "Specific permissions for this user."
     userPermissions: [PermissionType!]!
+}
+
+type Verify {
+    payload: GenericScalar!
+}
+
+type VerifyPasswordResetToken {
+    valid: Boolean
 }
 
 "An enumeration."
@@ -127,13 +250,21 @@ enum UserGender {
     M
 }
 
+input SaleLineInputType {
+    drugId: UUID!
+    id: UUID
+    quantity: Decimal!
+    sellingPrice: Decimal!
+}
 
-"""
-The `DateTime` scalar type represents a DateTime
-value as specified by
-[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
-"""
-scalar DateTime
+input SupplyLineInput {
+    costPrice: Decimal!
+    drugId: UUID!
+    expiryDate: Date!
+    lotNumber: String!
+    quantity: Int!
+}
+
 
 """
 Leverages the internal Python implmeentation of UUID (uuid.UUID) to provide native UUID objects
@@ -147,3 +278,20 @@ value as specified by
 [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
 """
 scalar Date
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"The `Decimal` scalar type represents a python Decimal."
+scalar Decimal
+
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar

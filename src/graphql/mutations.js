@@ -29,10 +29,48 @@ export const EDIT_GROUP = gql`mutation ($id: Int!, $name: String!, $permissions:
 }`;
 
 export const DELETE_GROUP = gql`mutation ($id: Int!) {
-    deleteGroup(id: $id) {
+    deleteGroup(groupId: $id) {
         group {
             id
             name
         }
     }
 }`;
+
+export const ADD_DRUG = gql`mutation ($name: String!, $sellingPrice: Decimal!, $costPricePerPack: Decimal!, $quantityPerPack: Int!) {
+    addDrug(name: $name, sellingPrice: $sellingPrice, costPricePerPack: $costPricePerPack, quantityPerPack: $quantityPerPack) {
+        drug {
+            id
+            name
+        }
+    }
+}`;
+
+export const OBTAIN_TOKEN = gql`mutation ($email: String!, $password: String!) {
+    obtainToken(email: $email, password: $password) {
+        token
+        payload
+    }
+}`;
+
+export const RECORD_SUPPLY = gql`mutation ($supplyDate: Date!, $supplier: String!, $vat: Decimal!, $discount: Decimal!, $freightCharge: Decimal!, $supplyLines: [SupplyLineInput]!) {
+    recordSupply(supplyDate: $supplyDate, supplier: $supplier, vat: $vat, discount: $discount, freightCharge: $freightCharge, supplyLines: $supplyLines) {
+        supply {
+            id
+        }
+    }
+}`;
+
+export const RECORD_SALE = gql`mutation ($timestamp: DateTime!, $discount: Decimal!, $saleLines: [SaleLineInputType!]!) {
+    recordSale(timestamp: $timestamp, discount: $discount, saleLines: $saleLines) {
+        sale {
+            id
+        }
+    }
+}`;
+
+export const VERIFY_PASSWORD_RESET_TOKEN = gql`mutation ($userId: UUID!, $token: String!){
+    verifyPasswordResetToken(userId: $userId, token: $token) {
+        valid
+    }
+}`

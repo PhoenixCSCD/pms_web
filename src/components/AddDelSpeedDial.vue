@@ -28,17 +28,17 @@
                 default: false
             }
         },
-        data () {
+        data() {
             return {
                 speedDial: true
             }
         },
         methods: {
             handleAddClick: function () {
-                this.$emit( 'addClick' );
+                this.$emit('addClick');
             },
             handleDelClick: function () {
-                this.$emit( 'delClick' );
+                this.$emit('delClick');
             }
         }
     }
