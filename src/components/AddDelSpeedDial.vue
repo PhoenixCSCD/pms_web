@@ -1,16 +1,16 @@
 <template>
-    <v-speed-dial fixed v-model="speedDial" bottom right direction="top" transition="slide-y-reverse-transition" >
+    <v-speed-dial bottom direction="top" fixed right transition="slide-y-reverse-transition" v-model="speedDial">
         <template v-slot:activator>
-            <v-btn v-model="speedDial" color="blue darken-2" dark fab>
+            <v-btn color="blue darken-2" dark fab v-model="speedDial">
                 <v-icon v-if="speedDial">mdi-close</v-icon>
                 <v-icon v-else>mdi-disc</v-icon>
             </v-btn>
         </template>
-        <v-btn fab dark small color="indigo" @click="$emit('add-click')">
-            <v-icon>mdi-plus</v-icon>
+        <v-btn :disabled="addDisabled" @click="handleAddClick" color="indigo" fab small>
+            <v-icon color="white">mdi-plus</v-icon>
         </v-btn>
-        <v-btn fab dark small color="red" @click="$emit('del-click')">
-            <v-icon>mdi-delete</v-icon>
+        <v-btn :disabled="delDisabled" @click="handleDelClick" color="red" fab small>
+            <v-icon color="white">mdi-delete</v-icon>
         </v-btn>
     </v-speed-dial>
 </template>
@@ -18,9 +18,27 @@
 <script>
     export default {
         name: "AddDelSpeedDial",
-        data() {
+        props: {
+            addDisabled: {
+                type: Boolean,
+                default: false
+            },
+            delDisabled: {
+                type: Boolean,
+                default: false
+            }
+        },
+        data () {
             return {
                 speedDial: true
+            }
+        },
+        methods: {
+            handleAddClick: function () {
+                this.$emit( 'addClick' );
+            },
+            handleDelClick: function () {
+                this.$emit( 'delClick' );
             }
         }
     }
