@@ -7,8 +7,17 @@ import Dashboard from '@/views/app/Dashboard'
 import ListDrugs from '@/views/app/ListDrugs'
 import ListUsers from '@/views/app/ListUsers'
 import ListGroups from '@/views/app/ListGroups';
+import ListSupplies from "@/views/app/ListSupplies";
+import ListSales from "@/views/app/ListSales";
+import ResetPassword from "@/views/auth/ResetPassword";
 
 Vue.use( VueRouter );
+
+const loginRequired = (to, from, next) => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken === null) next({name: 'login'})
+    else next();
+};
 
 const routes = [
     {
@@ -25,6 +34,11 @@ const routes = [
                 path: 'login',
                 name: 'login',
                 component: Login
+            },
+            {
+                path: 'reset-password',
+                name: 'reset-password',
+                component: ResetPassword
             }
         ]
     },
@@ -36,22 +50,38 @@ const routes = [
             {
                 path: 'dashboard',
                 name: 'dashboard',
-                component: Dashboard
+                component: Dashboard,
+                beforeEnter: loginRequired
             },
             {
                 path: 'drugs',
                 name: 'list-drugs',
-                component: ListDrugs
+                component: ListDrugs,
+                beforeEnter: loginRequired
             },
             {
                 path: 'users',
                 name: 'list-users',
-                component: ListUsers
+                component: ListUsers,
+                beforeEnter: loginRequired
             },
             {
                 path: 'groups',
                 name: 'list-groups',
-                component: ListGroups
+                component: ListGroups,
+                beforeEnter: loginRequired
+            },
+            {
+                path: 'supplies',
+                name: 'list-supplies',
+                component: ListSupplies,
+                beforeEnter: loginRequired
+            },
+            {
+                path: 'sales',
+                name: 'list-sales',
+                component: ListSales,
+                beforeEnter: loginRequired
             }
         ]
     },
@@ -66,7 +96,6 @@ const routes = [
 ];
 
 const router = new VueRouter( {
-    mode: 'history',
     base: process.env.BASE_URL,
     routes
 } );

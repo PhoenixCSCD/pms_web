@@ -1,15 +1,6 @@
 import gql from 'graphql-tag'
 
 
-export const AUTH_DATA = gql`query ($email: String!, $password: String!){
-    authData(email: $email, password: $password) {
-        id
-        firstName
-        lastName
-        token
-    }
-}`;
-
 export const USERS = gql`{
     users {
         id
@@ -22,7 +13,7 @@ export const USERS = gql`{
 }`;
 
 export const USER = gql`query ($id: UUID!) {
-    userById(id: $id) {
+    userById(userId: $id) {
         id
         firstName
         lastName
@@ -64,7 +55,7 @@ export const PERMISSIONS = gql`{
 }`;
 
 export const GROUP_BY_ID_WITH_PERMISSIONS = gql`query ($id: Int!){
-    groupById(id: $id) {
+    groupById(groupId: $id) {
         id
         name
         permissions {
@@ -72,4 +63,35 @@ export const GROUP_BY_ID_WITH_PERMISSIONS = gql`query ($id: Int!){
             name
         }
     }
+}`;
+
+export const DRUGS = gql`{
+  drugs {
+      id
+      name
+      sellingPrice
+      costPricePerPack
+      quantityPerPack
+  }  
+}`;
+
+export const ME = gql`{
+    me {
+        id
+        firstName
+        lastName
+        avatar
+    }
+}`;
+
+export const HAS_PERMISSION = gql`query ($permission: String!){
+    hasPermission(permission: $permission)
+}`;
+
+export const DRUG_STOCK_LEVEL = gql`query ($drugId: UUID!) {
+    stockLevel(drugId: $drugId)
+}`;
+
+export const DRUG_BATCH_STOCK_LEVEL = gql`query ($drugId: UUID!, $lotNumber: String!) {
+    stockLevel(drugId: $drugId, lotNumber: $lotNumber)
 }`;

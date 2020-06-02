@@ -93,14 +93,14 @@
             this.$topBar.enableAdd();
             this.$topBar.disableDelete();
 
-            this.$topBar.eventBus.$on( 'refreshClick', () => {
+            this.$topBar.eventBus.$on( 'click', () => {
 
                 this.$apollo.queries.users.refetch();
             } );
-            this.$topBar.eventBus.$on( 'addClick', () => {
+            this.$topBar.eventBus.$on( 'add', () => {
                 this.addDialog = true;
             } );
-            this.$topBar.eventBus.$on( 'deleteClick', () => {
+            this.$topBar.eventBus.$on( 'delete', () => {
             } );
         },
         apollo: {

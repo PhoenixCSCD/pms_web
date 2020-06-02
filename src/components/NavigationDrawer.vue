@@ -38,7 +38,7 @@
         props: {
             value: Boolean
         },
-        data () {
+        data() {
             return {
                 miniVariant: true,
                 sections: [
@@ -48,27 +48,27 @@
                             {
                                 title: 'Dashboard',
                                 icon: 'mdi-speedometer',
-                                path: { name: 'dashboard' }
+                                path: {name: 'dashboard'}
                             },
                             {
-                                title: 'Dispensary',
+                                title: 'Sales',
                                 icon: 'mdi-clipboard-text-outline',
-                                path: { name: 'login' }
+                                path: {name: 'list-sales'}
                             },
                             {
-                                title: 'Purchase Order',
+                                title: 'Supplies',
                                 icon: 'mdi-clipboard-outline',
-                                path: { name: 'login' }
+                                path: {name: 'list-supplies'}
                             },
                             {
                                 title: 'Stock Adjustment',
                                 icon: 'mdi-book-open-outline',
-                                path: { name: 'login' }
+                                path: {name: 'dashboard'}
                             },
                             {
                                 title: 'Expired Drugs',
                                 icon: 'mdi-pill',
-                                path: { name: 'login' }
+                                path: {name: 'dashboard'}
                             },
                         ]
                     },
@@ -78,22 +78,22 @@
                             {
                                 title: 'Drugs',
                                 icon: 'mdi-pill',
-                                path: { name: 'list-drugs' }
+                                path: {name: 'list-drugs'}
                             },
                             {
                                 title: 'Suppliers',
                                 icon: 'mdi-account-group',
-                                path: { name: 'login' }
+                                path: {name: 'dashboard'}
                             },
                             {
                                 title: 'Users',
                                 icon: 'mdi-account-group',
-                                path: { name: 'list-users' }
+                                path: {name: 'list-users'}
                             },
                             {
                                 title: 'Groups',
                                 icon: 'mdi-account-cog-outline',
-                                path: { name: 'list-groups' }
+                                path: {name: 'list-groups'}
                             },
                         ]
                     },
@@ -103,12 +103,12 @@
                             {
                                 title: 'Mail',
                                 icon: 'mdi-mail',
-                                path: { name: 'login' }
+                                path: {name: 'dashboard'}
                             },
                             {
                                 title: 'Calender',
                                 icon: 'mdi-mail',
-                                path: { name: 'login' }
+                                path: {name: 'dashboard'}
                             },
                         ]
                     }
@@ -116,13 +116,15 @@
             }
         },
         methods: {
-            handleInput ( value ) {
-                this.$emit( 'input', value )
+            handleInput(value) {
+                this.$emit('input', value)
             }
         }
     }
 </script>
 
 <style scoped>
-
+    /*#navigationDrawer {*/
+    /*    overflow-y: hidden;*/
+    /*}*/
 </style>

@@ -20,6 +20,9 @@ const topBar = {
     disableDelete: function () {
         store.commit( 'setDelete', false );
     },
+    getSearchInput: function () {
+
+    },
     eventBus: new Vue(),
 };
 

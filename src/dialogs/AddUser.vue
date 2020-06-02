@@ -163,16 +163,22 @@
             },
             handleAvatarChange: function ( e ) {
                 this.uploadingAvatar = true;
-                if ( this.user.avatar ) {
-                    this.$utils.imageKit.delete( this.user.avatar )
-                        .then( val => val ? 'True oh' : 'Na lie' )
-                }
-                this.$utils.imageKit.upload( e.target.files[0] )
-                    .then( data => {
-                        this.user.avatar = data.url;
-                        this.temp.avatarId = data.fileId;
-                        this.uploadingAvatar = false;
-                    } )
+                this.$utils.uploadImage(this.user.avatar, e.target.files[0])
+                .then(avatar => {
+                    console.log(avatar);
+                    this.user.avatar = avatar;
+                    this.uploadingAvatar = false;
+                })
+                // if ( this.user.avatar ) {
+                //     this.$utils.imageKit.delete( this.user.avatar )
+                //         .then( val => val ? 'True oh' : 'Na lie' )
+                // }
+                // this.$utils.imageKit.upload( e.target.files[0] )
+                //     .then( data => {
+                //         this.user.avatar = data.url;
+                //         this.temp.avatarId = data.fileId;
+                //         this.uploadingAvatar = false;
+                //     } )
             }
         },
         apollo: {

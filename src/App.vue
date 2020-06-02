@@ -18,3 +18,15 @@
         }),
     };
 </script>
+
+<style>
+    .v-navigation-drawer__content {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow: -moz-scrollbars-none;
+    }
+    .v-navigation-drawer__content::-webkit-scrollbar {
+        display: none;
+    }
+
+</style>
