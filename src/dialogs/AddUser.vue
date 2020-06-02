@@ -165,7 +165,6 @@
                 this.uploadingAvatar = true;
                 this.$utils.uploadImage(this.user.avatar, e.target.files[0])
                 .then(avatar => {
-                    console.log(avatar);
                     this.user.avatar = avatar;
                     this.uploadingAvatar = false;
                 })
