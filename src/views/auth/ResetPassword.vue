@@ -54,7 +54,6 @@
         },
         methods: {
             handleSubmit() {
-                console.log('Resetting Password!')
             }
         },
         mounted() {
