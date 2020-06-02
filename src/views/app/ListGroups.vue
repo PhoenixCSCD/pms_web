@@ -58,7 +58,7 @@
             this.$topBar.enableRefresh();
             this.$topBar.enableAdd();
             this.$topBar.disableDelete();
-            this.$topBar.eventBus.$on( 'addClick', () => {
+            this.$topBar.eventBus.$on( 'add', () => {
                 this.addDialog = true;
             } )
         },

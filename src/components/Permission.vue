@@ -21,7 +21,6 @@
             }
         },
         mounted() {
-            console.log(this.permission)
         },
         apollo: {
             hasPermission: {

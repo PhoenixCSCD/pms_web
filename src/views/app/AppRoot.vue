@@ -22,7 +22,7 @@
                 <v-icon>mdi-bell-outline</v-icon>
             </v-btn>
             <v-avatar v-if="user && user.avatar" class="mx-1">
-                <v-img :src="`${process.env.VUE_APP_MEDIA}${user['avatar']}`"/>
+                <v-img :src="`http://localhost:8000/media/${user['avatar']}`"/>
             </v-avatar>
             <v-btn class="mx-1" icon v-else>
                 <v-icon>mdi-account</v-icon>
