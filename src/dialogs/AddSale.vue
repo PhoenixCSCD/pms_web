@@ -262,9 +262,6 @@
                 this.sale.saleLines = []
                 this.sale.timestamp.date = this.$utils.getCurrentDateFormatted();
                 this.sale.timestamp.time = this.$utils.getCurrentTimeFormatted();
-                for (let prop in this.dataTable.subscriptions) {
-                    console.log(prop);
-                }
             }
         },
         mounted() {

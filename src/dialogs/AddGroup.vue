@@ -1,7 +1,13 @@
 <template>
-    <y-dialog :value="value" @input="handleInput" persistent width="500">
-        <template v-slot:title>Add Group</template>
-        <template slot-scope="props">
+    <v-dialog :value="value" @input="handleInput" persistent width="500">
+        <v-card>
+        <v-card-title>
+            Add Group
+            <v-spacer/>
+            <v-btn @click="closeDialog" color="red" icon>
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+        </v-card-title>
             <v-form @submit.prevent="() => handleSubmit(props.closeDialog)" ref="form">
                 <v-card-text>
                     <v-row>
@@ -20,13 +26,13 @@
                 </v-card-text>
                 <v-divider/>
                 <v-card-actions>
-                    <v-btn @click="props.closeDialog" color="red" dark outlined>Cancel</v-btn>
+                    <v-btn  color="red" dark outlined>Cancel</v-btn>
                     <v-spacer/>
                     <v-btn color="primary" type="submit">Save</v-btn>
                 </v-card-actions>
             </v-form>
-        </template>
-    </y-dialog>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
