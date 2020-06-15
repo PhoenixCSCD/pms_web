@@ -63,7 +63,7 @@
                             {
                                 title: 'Stock Adjustment',
                                 icon: 'mdi-book-open-outline',
-                                path: {name: 'dashboard'}
+                                path: {name: 'list-stock-adjustments'}
                             },
                             {
                                 title: 'Expired Drugs',

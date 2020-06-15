@@ -10,6 +10,7 @@ import ListGroups from '@/views/app/ListGroups';
 import ListSupplies from "@/views/app/ListSupplies";
 import ListSales from "@/views/app/ListSales";
 import ResetPassword from "@/views/auth/ResetPassword";
+import ListStockAdjustments from "@/views/app/ListStockAdjustments";
 
 Vue.use( VueRouter );
 
@@ -81,6 +82,12 @@ const routes = [
                 path: 'sales',
                 name: 'list-sales',
                 component: ListSales,
+                beforeEnter: loginRequired
+            },
+            {
+                path: 'stock-adjustments',
+                name: 'list-stock-adjustments',
+                component: ListStockAdjustments,
                 beforeEnter: loginRequired
             }
         ]
