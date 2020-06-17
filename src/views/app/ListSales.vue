@@ -2,35 +2,41 @@
     <v-layout class="justify-center align-center py-10">
         <v-flex class="md12 px-12">
             <v-card outlined>
-                <v-data-table :search="dataTable.search" :page.sync="dataTable.page" @page-count="dataTable.pageCount = $event" :headers="dataTable.headers" hide-default-footer :items="sales" item-key="id">
+                <v-data-table :headers="dataTable.headers" :items="sales" :loading="$apollo.loading"
+                              :page.sync="dataTable.page" :search="dataTable.search"
+                              @page-count="dataTable.pageCount = $event" hide-default-footer item-key="id">
                     <template v-slot:item.attendant="{item}">
                         {{item.attendant.firstName + ' ' + item.attendant.lastName}}
                     </template>
                     <template v-slot:item.time="{item}">
-                        {{new Date(item.timestamp).getHours() + ' : ' + new Date(item.timestamp).getMinutes()}}
+                        {{(new Date(item.timestamp)).toUTCString()}}
                     </template>
-                    <template v-slot:item.actions="{}">
-                        <v-btn icon>
+                    <template v-slot:item.actions="{item}">
+                        <v-btn @click="viewSaleLines(item.saleLines)" icon>
                             <v-icon>mdi-eye</v-icon>
                         </v-btn>
                     </template>
                 </v-data-table>
             </v-card>
         </v-flex>
-        <add-sale :active.sync="addDialog"/>
+        <add-sale :active.sync="addDialog" @complete-submit="$apollo.queries.sales.refetch()"/>
+        <view-sale :sale-lines="viewDialogSaleLines" v-model="viewDialog"/>
     </v-layout>
 </template>
 
 <script>
-    import AddSale from "@/dialogs/AddSale";
-    import {TODAY_SALES} from "@/graphql/queries";
+    import AddSale from '@/dialogs/AddSale';
+    import {SALES} from '@/graphql/queries';
+    import ViewSale from "@/dialogs/ViewSale";
 
     export default {
-        name: "ListSales",
-        components: {AddSale},
+        name: 'ListSales',
+        components: {ViewSale, AddSale},
         data: () => ({
             sales: [],
             addDialog: false,
+            viewDialog: false,
+            viewDialogSaleLines: [],
             dataTable: {
                 search: '',
                 page: 1,
@@ -45,14 +51,17 @@
                 ]
             }
         }),
-        apollo: {
-            sales: {
-                query: TODAY_SALES,
-                update: data => data['todaySales']
+        methods: {
+            viewSaleLines: function (saleLines) {
+                this.viewDialogSaleLines = saleLines;
+                this.viewDialog = true;
             }
         },
+        apollo: {
+            sales: SALES,
+        },
         mounted() {
-            this.$utils.setPageTitle('Sales')
+            this.$utils.setPageTitle('Sales');
             this.$topBar.enableAdd();
             this.$topBar.disableRefresh();
             this.$topBar.disableDelete();

@@ -100,8 +100,8 @@ export const DRUG_LOT_NUMBERS = gql`query ($drugId: UUID!) {
     drugLotNumbers(drugId: $drugId)
 }`;
 
-export const TODAY_SALES = gql`{
-   todaySales {
+export const SALES = gql`{
+   sales {
        id
        timestamp
        attendant {
@@ -111,5 +111,13 @@ export const TODAY_SALES = gql`{
        subTotal
        discount
        grandTotal
+       saleLines {
+           id
+           drug {
+               name
+           }
+           quantity
+           sellingPrice
+       }
    } 
 }`;

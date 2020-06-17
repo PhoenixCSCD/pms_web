@@ -1,103 +1,65 @@
 <template>
-    <v-container fluid class="pt-10">
+    <v-container fluid class="pa-10">
+        <v-row>
+            <y-date-field label="Start Date"/>
+        </v-row>
         <v-row>
             <v-col>
-                <v-card>
-                    <v-sheet class="v-card--heading pa-7 text-start " max-height="90" width="90" color="cyan">
-                        <v-icon color="white" size="32">mdi-filter</v-icon>
+                <v-card height="100">
+                    <v-sheet color="green" height="100" width="100" class="py-5"
+                             style="text-align: center; position: absolute">
+                        <v-icon size="64" color="white">mdi-chart-timeline-variant</v-icon>
                     </v-sheet>
-                    <v-card-text style="margin-top: -80px" class="text-right">
-                        Hello
-                    </v-card-text>
-                    <v-divider/>
-                    <v-card-text>
-                        World
-                    </v-card-text>
-
+                    <div class="">
+                        <span class="d-flex justify-end pa-2 display-2" style="">312</span>
+                        <v-divider/>
+                        <span class="d-flex justify-end px-2 py-1 grey--text font-weight-bold">Sales</span>
+                    </div>
                 </v-card>
             </v-col>
             <v-col>
-                <v-card>
-                    <v-sheet class="v-sheet--offset" color="cyan">
-                        <v-icon>mdi-filter</v-icon>
+                <v-card height="100">
+                    <v-sheet color="orange" height="100" width="100" class="py-5"
+                             style="text-align: center; position: absolute">
+                        <v-icon size="64" color="white">mdi-cart-arrow-up</v-icon>
                     </v-sheet>
-                    <v-card-text>
-                        Hello
-                    </v-card-text>
+                    <div class="">
+                        <span class="d-flex justify-end pa-2 display-1" style="">312</span>
+                        <v-divider/>
+                        <span class="d-flex justify-end pa-2 grey--text font-weight-bold">Units Sold</span>
+                    </div>
                 </v-card>
             </v-col>
             <v-col>
-                <v-card>
-                    <v-sheet class="v-sheet--offset" color="cyan">
-                        <v-icon>mdi-filter</v-icon>
+                <v-card height="100">
+                    <v-sheet color="primary" height="100" width="100" class="py-5"
+                             style="text-align: center; position: absolute">
+                        <v-icon size="64" color="white">mdi-cart-arrow-down</v-icon>
                     </v-sheet>
-                    <v-card-text>
-                        Hello
-                    </v-card-text>
+                    <div class="">
+                        <span class="d-flex justify-end pa-2 display-1" style="">312</span>
+                        <v-divider/>
+                        <span class="d-flex justify-end pa-2 grey--text font-weight-bold">Units in Stock</span>
+                    </div>
                 </v-card>
             </v-col>
             <v-col>
-                <v-card>
-                    <v-sheet class="v-sheet--offset" color="cyan">
-                        <v-icon>mdi-filter</v-icon>
+                <v-card height="100">
+                    <v-sheet color="red" height="100" width="100" class="py-5"
+                             style="text-align: center; position: absolute">
+                        <v-icon size="64" color="white">mdi-cash-multiple</v-icon>
                     </v-sheet>
-                    <v-card-text>
-                        Hello
-                    </v-card-text>
+                    <div class="">
+                        <span class="d-flex justify-end pa-2 display-1" style="">312</span>
+                        <v-divider/>
+                        <span class="d-flex justify-end pa-2 grey--text font-weight-bold">Revenue</span>
+                    </div>
                 </v-card>
             </v-col>
         </v-row>
-<!--        <v-row>-->
-<!--            <v-col>-->
-<!--                <v-card-->
-<!--                        class="mx-auto text-center"-->
-<!--                        color="orange"-->
-<!--                        dark-->
-<!--                        max-width="600"-->
-<!--                >-->
-<!--                    <v-card-text>-->
-<!--                        <v-sheet color="rgba(0, 0, 0, .12)">-->
-<!--                            <v-sparkline-->
-<!--                                    :labels="labels"-->
-<!--                                    :value="value"-->
-<!--                                    height="100"-->
-<!--                                    padding="10"-->
-<!--                                    color="white"-->
-<!--                            >-->
-<!--                            </v-sparkline>-->
-<!--                        </v-sheet>-->
-<!--                    </v-card-text>-->
+        <v-data-table hide-default-footer>
 
-<!--                    <v-card-text>-->
-<!--                        <span class="display-1">Sales</span>-->
-<!--                    </v-card-text>-->
-<!--                </v-card>-->
-<!--            </v-col>-->
-<!--            <v-col>-->
-<!--                <v-card-->
-<!--                        class="mx-auto text-center"-->
-<!--                        color="green"-->
-<!--                        dark-->
-<!--                        max-width="600"-->
-<!--                >-->
-<!--                    <v-card-text>-->
-<!--                        <v-sheet color="rgba(0, 0, 0, .12)">-->
-<!--                            <v-sparkline-->
-<!--                                    :value="value"-->
-<!--                                    color="white"-->
-<!--                                    height="100"-->
-<!--                                    padding="10"-->
-<!--                            >-->
-<!--                            </v-sparkline>-->
-<!--                        </v-sheet>-->
-<!--                    </v-card-text>-->
-
-<!--                    <v-card-text>-->
-<!--                        <span class="display-1">Supplies</span>-->
-<!--                    </v-card-text>-->
-<!--                </v-card>-->
-<!--            </v-col>-->
-<!--        </v-row>-->
+        </v-data-table>
     </v-container>
 </template>
 
@@ -106,35 +68,20 @@
         name: 'Dashboard',
         data() {
             return {
-                labels: [
-                    '12am',
-                    '3am',
-                    '6am',
-                    '9am',
-                    '12pm',
-                    '3pm',
-                    '6pm',
-                    '9pm',
-                ],
-                value: [
-                    200,
-                    675,
-                    410,
-                    390,
-                    310,
-                    460,
-                    250,
-                    240,
-                ],
-            }
-        },
-        methods: {
-            reduce() {
-                if (this.count > 0) this.count--;
+                dataTable: {
+                    headers: [
+                        {text: 'User', value: 'userFullName'},
+                        {text: 'Drug', value: 'drugName'},
+                        // {text: }
+                    ]
+                }
             }
         },
         mounted() {
             this.$utils.setPageTitle('Dashboard');
+            this.$topBar.disableAdd();
+            this.$topBar.disableDelete();
+            this.$topBar.disableRefresh();
         }
     }
 </script>

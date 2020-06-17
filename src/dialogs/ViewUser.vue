@@ -65,7 +65,7 @@
 
     export default {
         name: 'ViewUser',
-        components: { NAvatar },
+        components: {NAvatar},
         props: {
             value: {
                 type: Boolean,
@@ -83,11 +83,11 @@
             }
         },
         methods: {
-            handleInput: function ( value ) {
-                this.$emit( 'input', value );
+            handleInput: function (value) {
+                this.$emit('input', value);
             }
         },
-        mounted () {
+        mounted() {
         },
         apollo: {
             user: {
@@ -97,7 +97,7 @@
                     return !this.userId
                 },
                 variables: function () {
-                    return { id: this.userId }
+                    return {id: this.userId}
                 }
             }
         }
