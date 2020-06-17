@@ -95,3 +95,29 @@ export const DRUG_STOCK_LEVEL = gql`query ($drugId: UUID!) {
 export const DRUG_BATCH_STOCK_LEVEL = gql`query ($drugId: UUID!, $lotNumber: String!) {
     stockLevel(drugId: $drugId, lotNumber: $lotNumber)
 }`;
+
+export const DRUG_LOT_NUMBERS = gql`query ($drugId: UUID!) {
+    drugLotNumbers(drugId: $drugId)
+}`;
+
+export const SALES = gql`{
+   sales {
+       id
+       timestamp
+       attendant {
+           firstName
+           lastName
+       }
+       subTotal
+       discount
+       grandTotal
+       saleLines {
+           id
+           drug {
+               name
+           }
+           quantity
+           sellingPrice
+       }
+   } 
+}`;

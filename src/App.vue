@@ -3,18 +3,25 @@
         <v-content>
             <router-view/>
         </v-content>
+        <notification-snackbar v-for="notification in notifications" :value="true" :message="notification.message" :key="notification.message"/>
     </v-app>
 </template>
 
 <script>
 
+    import NotificationSnackbar from "@/components/NotificationSnackbar";
+
     export default {
         name: 'App',
 
-        components: {},
+        components: {NotificationSnackbar},
 
         data: () => ({
-            //
+            notifications: [
+                {
+                    message: 'Hello world!!'
+                }
+            ]
         }),
     };
 </script>

@@ -73,4 +73,12 @@ export const VERIFY_PASSWORD_RESET_TOKEN = gql`mutation ($userId: UUID!, $token:
     verifyPasswordResetToken(userId: $userId, token: $token) {
         valid
     }
-}`
+}`;
+
+export const RECORD_STOCK_ADJUSTMENT = gql`mutation ($timestamp: DateTime!, $reason: String!, $stockAdjustmentLines: [StockAdjustmentLineInput!]!) {
+    recordStockAdjustment(timestamp: $timestamp, reason: $reason, stockAdjustmentLines: $stockAdjustmentLines) {
+        stockAdjustment {
+            id
+        }
+    }
+}`;

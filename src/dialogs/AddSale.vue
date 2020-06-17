@@ -178,7 +178,7 @@
                         .then(() => {
                             this.$emit('complete-submit');
                             this.resetForm();
-                            this.$nextTick(() => this.$refs.form.reset())
+                            // this.$nextTick(() => this.$refs.form.reset())
                             this.closeDialog();
                         })
                 })

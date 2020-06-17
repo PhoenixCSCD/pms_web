@@ -80,7 +80,7 @@
                         </v-btn>
                     </v-btn-toggle>
                     <v-spacer/>
-                    <v-btn color="primary" type="submit">Save</v-btn>
+                    <v-btn color="primary" type="submit" @submit="handleSubmit">Save</v-btn>
                 </v-card-actions>
             </v-form>
         </v-card>
@@ -131,7 +131,7 @@
             handleInput: function (value) {
                 this.$emit('input', value)
             },
-            hideDialog: function () {
+            closeDialog: function () {
                 this.$refs.form.reset();
                 this.handleInput(false);
             },
