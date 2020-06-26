@@ -1,34 +1,6 @@
 <template>
-    <v-container class="primary" fluid style="height: 100vh; overflow-y: hidden;">
-        <v-row class="py-5">
-            <v-col>
-                <div class="d-flex justify-center">
-                    <v-img contain height="70" src="@/assets/logos/cloud32.png"/>
-                </div>
-            </v-col>
-        </v-row>
-<!--        <v-row class="py-5">-->
-<!--            <v-col>-->
-<!--                <div class="d-flex justify-center">-->
-<!--                    <span class="display-1 white&#45;&#45;text font-weight-light">Log in to PMS</span>-->
-<!--                </div>-->
-<!--            </v-col>-->
-<!--        </v-row>-->
+    <v-container fluid style="height: 100vh; overflow-y: hidden; background-image: url('/bg.jpg')">
         <router-view/>
-<!--        <v-row>-->
-<!--            <v-col>-->
-<!--                <div class="d-flex justify-center">-->
-<!--                    <v-btn color="white" text small>Reset Password</v-btn>-->
-<!--                </div>-->
-<!--            </v-col>-->
-<!--        </v-row>-->
-        <div style="width:100%; position: absolute; bottom: 5px ">
-            <div class="d-flex justify-center">
-            <v-btn color="white" text small>Privacy</v-btn>
-            <v-btn color="white" text small>Terms</v-btn>
-            <v-btn color="white" text small>Help</v-btn>
-            </div>
-        </div>
     </v-container>
 </template>
 
