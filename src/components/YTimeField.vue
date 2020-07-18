@@ -4,9 +4,9 @@
         <v-time-picker :max="max" :min="min" :value="value"
                        @input="input" landscape scrollable/>
         <template v-slot:activator="{ on }">
-            <v-text-field :dense="dense" :label=label :outlined=outlined
-                          :value="value" hide-details="auto"
-                          readonly :error-messages="errorMessages"
+            <v-text-field :dense="dense" :error-messages="errorMessages" :label=label
+                          :outlined=outlined :value="value"
+                          hide-details="auto" readonly
                           v-on="on"/>
         </template>
     </v-menu>
@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        name: "YTimeField",
+        name: 'YTimeField',
         props: {
             value: String,
             min: {
@@ -47,7 +47,7 @@
                 this.$emit('input', value);
             }
         }
-    }
+    };
 </script>
 
 <style scoped>

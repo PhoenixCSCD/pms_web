@@ -82,3 +82,9 @@ export const RECORD_STOCK_ADJUSTMENT = gql`mutation ($timestamp: DateTime!, $rea
         }
     }
 }`;
+
+export const DELETE_USERS = gql`mutation ($userIds: [UUID]) {
+    deleteUsers(userIds: $userIds) {
+        userIds
+    }
+}`;

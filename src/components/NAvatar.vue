@@ -38,7 +38,7 @@
             image: String,
             alt: String
         }
-    }
+    };
 </script>
 
 <style scoped>

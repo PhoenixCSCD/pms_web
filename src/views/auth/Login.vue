@@ -1,6 +1,6 @@
 <template>
     <v-row justify="center">
-        <v-col md="4" lg="3">
+        <v-col lg="3" md="4">
             <v-card class="py-6 px-6" outlined>
                 <v-card-title class="justify-center">Login</v-card-title>
                 <v-card-text>
@@ -24,9 +24,9 @@
 
 <script>
 
-    import {OBTAIN_TOKEN} from "@/graphql/mutations";
-    import {ME} from "@/graphql/queries";
-    import {onLogin} from "@/vue-apollo";
+    import {OBTAIN_TOKEN} from '@/graphql/mutations';
+    import {ME} from '@/graphql/queries';
+    import {onLogin} from '@/vue-apollo';
 
     export default {
         name: 'Login',
@@ -37,26 +37,26 @@
                     email: 'admin@pms.com',
                     password: 'neutron45'
                 }
-            }
+            };
         },
         methods: {
             handleSubmit() {
                 this.$apollo.mutate({mutation: OBTAIN_TOKEN, variables: this.credentials})
                     .then(data => {
-                        localStorage.setItem('authToken', data['data']['obtainToken']['token'])
+                        localStorage.setItem('authToken', data['data']['obtainToken']['token']);
                         onLogin(this.$apollo.getClient())
                             .then(() => {
                                 this.$apollo.query({query: ME})
                                     .then((data) => {
                                         localStorage.setItem('user', JSON.stringify(data['data']['me']));
-                                        this.$router.push({name: 'list-users'})
-                                    })
-                            })
-                    })
+                                        this.$router.push({name: 'list-users'});
+                                    });
+                            });
+                    });
             }
         },
         mounted() {
             this.$utils.setPageTitle('Login');
         }
-    }
+    };
 </script>

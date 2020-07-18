@@ -40,7 +40,7 @@
         },
         data() {
             return {
-                miniVariant: true,
+                miniVariant: false,
                 sections: [
                     {
                         title: 'transactions',
@@ -69,7 +69,7 @@
                                 title: 'Expired Drugs',
                                 icon: 'mdi-pill',
                                 path: {name: 'dashboard'}
-                            },
+                            }
                         ]
                     },
                     {
@@ -94,7 +94,7 @@
                                 title: 'Groups',
                                 icon: 'mdi-account-cog-outline',
                                 path: {name: 'list-groups'}
-                            },
+                            }
                         ]
                     },
                     {
@@ -109,18 +109,18 @@
                                 title: 'Calender',
                                 icon: 'mdi-mail',
                                 path: {name: 'dashboard'}
-                            },
+                            }
                         ]
                     }
                 ]
-            }
+            };
         },
         methods: {
             handleInput(value) {
-                this.$emit('input', value)
+                this.$emit('input', value);
             }
         }
-    }
+    };
 </script>
 
 <style scoped>

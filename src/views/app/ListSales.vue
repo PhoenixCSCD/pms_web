@@ -27,7 +27,7 @@
 <script>
     import AddSale from '@/dialogs/AddSale';
     import {SALES} from '@/graphql/queries';
-    import ViewSale from "@/dialogs/ViewSale";
+    import ViewSale from '@/dialogs/ViewSale';
 
     export default {
         name: 'ListSales',
@@ -58,7 +58,7 @@
             }
         },
         apollo: {
-            sales: SALES,
+            sales: SALES
         },
         mounted() {
             this.$utils.setPageTitle('Sales');
@@ -73,7 +73,7 @@
             // this.$apollo.subscribe({query: HELLO})
             // .subscribe(response => console.log(response["data"]["hello"]));
         }
-    }
+    };
 </script>
 
 <style scoped>

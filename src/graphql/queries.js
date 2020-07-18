@@ -121,3 +121,7 @@ export const SALES = gql`{
        }
    } 
 }`;
+
+export const EMAIL_EXISTS = gql`query ($email: String!){
+    emailExists(email: $email)
+}`

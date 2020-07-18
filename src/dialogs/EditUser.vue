@@ -16,19 +16,25 @@
 
                             <v-row>
                                 <v-col md="6">
-                                    <v-text-field dense hide-details label="First Name" outlined
-                                                  v-model="user.firstName"/>
+                                    <validation-provider rules="required" v-slot="{errors}">
+                                        <v-text-field :error-messages="errors" dense hide-details="auto" label="First Name"
+                                                      outlined v-model="user.firstName"/>
+                                    </validation-provider>
                                 </v-col>
                                 <v-col md="6">
-                                    <v-text-field dense hide-details label="Last Name" outlined
-                                                  v-model="user.lastName"/>
+                                    <validation-provider rules="required" v-slot="{errors}">
+                                        <v-text-field :error-messages="errors" dense hide-details="auto" label="Last Name"
+                                                      outlined v-model="user.lastName"/>
+                                    </validation-provider>
                                 </v-col>
                             </v-row>
 
                             <v-row>
                                 <v-col>
-                                    <v-select :items="genderOptions" dense hide-details label="Gender"
-                                              outlined v-model="user.gender"/>
+                                    <validation-provider rules="required" v-slot="{errors}">
+                                        <v-select :error-messages="errors" :items="genderOptions" dense hide-details="auto"
+                                                  label="Gender" outlined v-model="user.gender"/>
+                                    </validation-provider>
                                 </v-col>
                             </v-row>
 
@@ -50,21 +56,26 @@
 
                             <v-row>
                                 <v-col>
-                                    <v-text-field dense hide-details label="Email Address" outlined
-                                                  v-model="user.email"/>
+                                    <validation-provider rules="required|email|email_unique" v-slot="{errors}">
+                                        <v-text-field :error-messages="errors" dense hide-details="auto" label="Email Address"
+                                                      outlined v-model="user.email"/>
+                                    </validation-provider>
                                 </v-col>
                             </v-row>
 
                             <v-row>
                                 <v-col>
-                                    <v-text-field dense hide-details label="Phone Number" outlined
-                                                  v-model="user.phoneNumber"/>
+                                    <validation-provider rules="required" v-slot="{errors}">
+                                        <v-text-field :error-messages="errors" dense hide-details="auto" label="Phone Number"
+                                                      outlined v-model="user.phoneNumber"/>
+                                    </validation-provider>
                                 </v-col>
                             </v-row>
 
                             <v-row>
                                 <v-col>
-                                    <v-select :items="groups" dense hide-details item-text="name" item-value="id"
+                                    <v-select :items="groups" dense hide-details="auto" item-text="name"
+                                              item-value="id"
                                               label="Groups" multiple outlined v-model="user.groups"/>
                                 </v-col>
                             </v-row>
@@ -90,7 +101,7 @@
                 <v-card-actions>
                     <v-btn @click="hideDialog" color="red" dark outlined>Cancel</v-btn>
                     <v-spacer/>
-                    <v-btn color="primary" type="submit">Save</v-btn>
+                    <v-btn :disabled="invalid" color="primary" type="submit">Save</v-btn>
                 </v-card-actions>
             </v-form>
         </v-card>
@@ -99,9 +110,29 @@
 
 <script>
     import {ADD_USER} from '@/graphql/mutations';
-    import {GROUPS, USER} from '@/graphql/queries';
+    import {EMAIL_EXISTS, GROUPS, USER} from '@/graphql/queries';
     import {GENDER} from '@/options';
     import NAvatar from '@/components/NAvatar';
+    import {extend} from 'vee-validate';
+    import {email} from 'vee-validate/dist/rules';
+    import {createClient} from '@/vue-apollo';
+
+    const apolloClient = createClient();
+    extend('email', {
+        ...email,
+        message: 'Invalid email'
+    })
+    extend('email_unique', {
+        message: 'This email has already been used',
+        validate: (value) => {
+            return new Promise(resolve => {
+                apolloClient.query({query: EMAIL_EXISTS, variables: {email: value}})
+                    .then((response) => {
+                        resolve({valid: !response.data['emailExists']});
+                    })
+            })
+        }
+    });
 
     export default {
         name: 'EditUser',

@@ -16,7 +16,7 @@
 
 <script>
     export default {
-        name: "YDialog",
+        name: 'YDialog',
         model: {
             prop: 'active',
             event: 'update:active'
@@ -30,7 +30,7 @@
             },
             height: {
                 type: String,
-                required: false,
+                required: false
                 // default: 500
             },
             persistent: {
@@ -49,7 +49,7 @@
                 this.$emit('update:active', false);
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
