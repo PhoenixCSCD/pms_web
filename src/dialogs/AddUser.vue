@@ -123,10 +123,14 @@
     import {EMAIL_EXISTS, GROUPS} from '@/graphql/queries';
     import NAvatar from '@/components/NAvatar';
     import {extend} from 'vee-validate';
-    import {email} from 'vee-validate/dist/rules';
+    import {email, required} from 'vee-validate/dist/rules';
     import {createClient} from '@/vue-apollo';
 
     const apolloClient = createClient();
+    extend('required', {
+        ...required,
+        message: 'This field is required'
+    });
     extend('email', {
         ...email,
         message: 'Invalid email'
