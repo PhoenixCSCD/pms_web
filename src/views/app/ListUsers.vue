@@ -94,7 +94,6 @@
         },
         methods: {
             handleDelete: function (userId) {
-                console.log(userId);
                 this.activeUserId = userId;
                 this.deleteDialog = true;
             },
