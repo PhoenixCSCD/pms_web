@@ -10,7 +10,7 @@
             </v-card-title>
             <v-divider/>
             <validation-observer ref="form" v-slot="{invalid}">
-                <v-form @submit.prevent="handleSubmit">
+                <v-form @submit.prevent="onSubmit">
                     <v-card-text>
                         <v-row>
                             <v-col md="8">
@@ -18,13 +18,15 @@
                                 <v-row>
                                     <v-col md="6">
                                         <validation-provider rules="required" v-slot="{errors}">
-                                            <v-text-field :error-messages="errors" dense hide-details="auto" label="First Name"
+                                            <v-text-field :error-messages="errors" dense hide-details="auto"
+                                                          label="First Name"
                                                           outlined v-model="user.firstName"/>
                                         </validation-provider>
                                     </v-col>
                                     <v-col md="6">
                                         <validation-provider rules="required" v-slot="{errors}">
-                                            <v-text-field :error-messages="errors" dense hide-details="auto" label="Last Name"
+                                            <v-text-field :error-messages="errors" dense hide-details="auto"
+                                                          label="Last Name"
                                                           outlined v-model="user.lastName"/>
                                         </validation-provider>
                                     </v-col>
@@ -33,7 +35,8 @@
                                 <v-row>
                                     <v-col>
                                         <validation-provider rules="required" v-slot="{errors}">
-                                            <v-select :error-messages="errors" :items="genderOptions" dense hide-details="auto"
+                                            <v-select :error-messages="errors" :items="genderOptions" dense
+                                                      hide-details="auto"
                                                       label="Gender" outlined v-model="user.gender"/>
                                         </validation-provider>
                                     </v-col>
@@ -58,7 +61,8 @@
                                 <v-row>
                                     <v-col>
                                         <validation-provider rules="required|email|email_unique" v-slot="{errors}">
-                                            <v-text-field :error-messages="errors" dense hide-details="auto" label="Email Address"
+                                            <v-text-field :error-messages="errors" dense hide-details="auto"
+                                                          label="Email Address"
                                                           outlined v-model="user.email"/>
                                         </validation-provider>
                                     </v-col>
@@ -67,7 +71,8 @@
                                 <v-row>
                                     <v-col>
                                         <validation-provider rules="required" v-slot="{errors}">
-                                            <v-text-field :error-messages="errors" dense hide-details="auto" label="Phone Number"
+                                            <v-text-field :error-messages="errors" dense hide-details="auto"
+                                                          label="Phone Number"
                                                           outlined v-model="user.phoneNumber"/>
                                         </validation-provider>
                                     </v-col>
@@ -86,11 +91,11 @@
                             <v-col>
                                 <v-layout align-center column fill-height justify-center>
                                     <v-flex class="d-flex align-center">
-                                        <input @change="handleAvatarChange" class="hidden-file-input" id="avatar"
+                                        <input @change="onChangeAvatar" class="hidden-file-input" id="avatar"
                                                name="avatar"
                                                type="file"/>
                                         <label for="avatar" style="display: inline; border-radius: 100%">
-                                            <n-avatar :image="user.avatar" :loading="uploadingAvatar"/>
+                                            <n-avatar :src="avatarPreview" :loading="uploadingAvatar"/>
                                         </label>
                                     </v-flex>
                                     <v-flex>
@@ -148,6 +153,7 @@
         },
         data: function () {
             return {
+                avatarPreview: undefined,
                 genderOptions: GENDER || [],
                 groups: [],
                 uploadingAvatar: false,
@@ -186,30 +192,28 @@
                 this.$refs.form.reset();
                 this.handleInput(false);
             },
-            handleSubmit: function () {
+            onSubmit: function () {
+                if (this.$utils.isValidHttpUrl(this.user.avatar)) this.save();
+                else {
+                    this.$utils.uploadFile(this.user.avatar)
+                        .then(({url, secure_url}) => {
+                            this.user.avatar = location.protocol === 'https:' ? secure_url : url;
+                            this.save();
+                        });
+                }
+            },
+            save: function () {
                 this.$apollo.mutate({mutation: ADD_USER, variables: this.user})
                     .then(() => {
                         this.$emit('after-submit');
                         this.hideDialog();
                     });
             },
-            handleAvatarChange: function (e) {
-                this.uploadingAvatar = true;
-                this.$utils.uploadImage(this.user.avatar, e.target.files[0])
-                    .then(avatar => {
-                        this.user.avatar = avatar;
-                        this.uploadingAvatar = false;
-                    });
-                // if ( this.user.avatar ) {
-                //     this.$utils.imageKit.delete( this.user.avatar )
-                //         .then( val => val ? 'True oh' : 'Na lie' )
-                // }
-                // this.$utils.imageKit.upload( e.target.files[0] )
-                //     .then( data => {
-                //         this.user.avatar = data.url;
-                //         this.temp.avatarId = data.fileId;
-                //         this.uploadingAvatar = false;
-                //     } )
+            onChangeAvatar: function (e) {
+                if (e.target.files[0]) {
+                    this.user.avatar = e.target.files[0];
+                    this.avatarPreview = URL.createObjectURL(e.target.files[0]);
+                }
             }
         },
         apollo: {

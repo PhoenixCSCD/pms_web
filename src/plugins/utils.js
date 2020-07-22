@@ -9,26 +9,42 @@ const utils = {
         document.title = `${title} | PMS`;
         store.commit('setPageTitle', title);
     },
-    uploadImage: (oldImage, image) => {
+    isValidHttpUrl: (string) => {
+        let url;
+
+        try {
+            url = new URL(string);
+        } catch (_) {
+            return false;
+        }
+
+        return url.protocol === "http:" || url.protocol === "https:";
+    },
+    uploadFile: (file) => {
         const formData = new FormData();
-        formData.append('oldImage', oldImage)
-        formData.append('image', image)
+        formData.append('file', file)
 
         const headers = {
             'Content-Type': 'multipart/form-data'
         }
         return new Promise(((resolve, reject) => {
-            axios.post('http://localhost:8000/upload-image/', formData, {headers})
+            axios.post(process.env.VUE_APP_FILE_UPLOAD_URL, formData, {headers})
                 .then(response => {
-                    resolve(response.data.image);
+                    resolve(response.data);
                 })
                 .catch(() => {
-                    reject('Error Upload file');
+                    reject('Error Uploading file');
                 });
         }));
     },
     hasPermission: (permission) => {
-        apolloClient.query({query: HAS_PERMISSION, variables: {permission}});
+        return new Promise((resolve => {
+            apolloClient.query({query: HAS_PERMISSION, variables: {permission}})
+                .then(response => {
+                    resolve(response.data.hasPermission)
+                })
+        }))
+
     },
     getCurrentDateFormatted: function () {
         const now = new Date();

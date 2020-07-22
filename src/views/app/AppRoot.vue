@@ -29,7 +29,7 @@
             </v-btn>
 
             <v-avatar class="mx-1" v-if="user && user.avatar">
-                <v-img :src="`http://localhost:8000/media/${user['avatar']}`"/>
+                <v-img :src="user.avatar"/>
             </v-avatar>
             <v-btn class="mx-1" icon v-else>
                 <v-icon>mdi-account</v-icon>

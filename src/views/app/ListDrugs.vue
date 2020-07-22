@@ -1,7 +1,7 @@
 <template>
     <v-layout class="justify-center align-center py-10">
         <v-flex class="md12 px-12">
-            <v-card outlined>
+            <v-card outlined :disabled="$apollo.loading">
                 <v-data-table :headers="dataTable.headers" :items="drugs"
                               :loading="$apollo.loading" :page.sync="dataTable.page" :search="dataTable.search"
                               @item-selected="selectRow" @page-count="dataTable.pageCount = $event" @toggle-select-all="selectAllRows" hide-default-footer

@@ -10,6 +10,15 @@ export const ADD_USER = gql`mutation ($firstName: String!, $lastName: String!, $
     }
 }`;
 
+export const EDIT_USER = gql`mutation ($userId: UUID!, $firstName: String!, $lastName: String!, $email: String!, $gender: String!, $dateOfBirth: Date!, $phoneNumber: String! $groups: [Int], $avatar: String!) {
+	editUser(userId: $userId, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, dateOfBirth: $dateOfBirth, phoneNumber: $phoneNumber, groups: $groups, avatar: $avatar) {
+		user {
+			id
+			password
+		}
+	}
+}`;
+
 export const ADD_GROUP = gql`mutation ($name: String!, $permissions: [Int]) {
     addGroup(name: $name, permissions: $permissions) {
         group {
@@ -69,11 +78,11 @@ export const RECORD_SALE = gql`mutation ($timestamp: DateTime!, $discount: Decim
     }
 }`;
 
-export const VERIFY_PASSWORD_RESET_TOKEN = gql`mutation ($userId: UUID!, $token: String!){
-    verifyPasswordResetToken(userId: $userId, token: $token) {
-        valid
-    }
-}`;
+// export const VERIFY_PASSWORD_RESET_TOKEN = gql`mutation ($email: String!, $token: String!){
+//     verifyPasswordResetToken(email: $email, token: $token) {
+//         valid
+//     }
+// }`;
 
 export const RECORD_STOCK_ADJUSTMENT = gql`mutation ($timestamp: DateTime!, $reason: String!, $stockAdjustmentLines: [StockAdjustmentLineInput!]!) {
     recordStockAdjustment(timestamp: $timestamp, reason: $reason, stockAdjustmentLines: $stockAdjustmentLines) {
@@ -86,5 +95,11 @@ export const RECORD_STOCK_ADJUSTMENT = gql`mutation ($timestamp: DateTime!, $rea
 export const DELETE_USERS = gql`mutation ($userIds: [UUID]) {
     deleteUsers(userIds: $userIds) {
         userIds
+    }
+}`;
+
+export const RESET_PASSWORD = gql`mutation ($email: String!, $token: String!, $password: String!) {
+    resetPassword(email: $email, token: $token, password: $password) {
+        ok
     }
 }`;
