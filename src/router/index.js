@@ -1,16 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/views/auth/Login'
 import AuthRoot from '@/views/auth/AuthRoot'
 import AppRoot from '@/views/app/AppRoot'
-import Dashboard from '@/views/app/Dashboard'
-import ListDrugs from '@/views/app/ListDrugs'
-import ListUsers from '@/views/app/ListUsers'
-import ListGroups from '@/views/app/ListGroups';
-import ListSupplies from "@/views/app/ListSupplies";
-import ListSales from "@/views/app/ListSales";
-import ResetPassword from "@/views/auth/ResetPassword";
-import ListStockAdjustments from "@/views/app/ListStockAdjustments";
 
 Vue.use( VueRouter );
 
@@ -34,12 +25,12 @@ const routes = [
             {
                 path: 'login',
                 name: 'login',
-                component: Login
+                component: () => import('@/views/auth/Login')
             },
             {
                 path: 'reset-password',
                 name: 'reset-password',
-                component: ResetPassword
+                component: () => import('@/views/auth/ResetPassword')
             }
         ]
     },
@@ -51,55 +42,48 @@ const routes = [
             {
                 path: 'dashboard',
                 name: 'dashboard',
-                component: Dashboard,
+                component: () => import('@/views/app/Dashboard'),
                 beforeEnter: loginRequired
             },
             {
                 path: 'drugs',
                 name: 'list-drugs',
-                component: ListDrugs,
+                component: () => import('@/views/app/ListDrugs'),
                 beforeEnter: loginRequired
             },
             {
                 path: 'users',
                 name: 'list-users',
-                component: ListUsers,
+                component: () => import('@/views/app/ListUsers'),
                 beforeEnter: loginRequired
             },
             {
                 path: 'groups',
                 name: 'list-groups',
-                component: ListGroups,
+                component: () => import('@/views/app/ListGroups'),
                 beforeEnter: loginRequired
             },
             {
                 path: 'supplies',
                 name: 'list-supplies',
-                component: ListSupplies,
+                component: () => import('@/views/app/ListSupplies'),
                 beforeEnter: loginRequired
             },
             {
                 path: 'sales',
                 name: 'list-sales',
-                component: ListSales,
+                component: () => import('@/views/app/ListSales'),
                 beforeEnter: loginRequired
             },
             {
                 path: 'stock-adjustments',
                 name: 'list-stock-adjustments',
-                component: ListStockAdjustments,
+                component: () => import('@/views/app/ListStockAdjustments'),
                 beforeEnter: loginRequired
             }
         ]
     },
-    {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
+
 ];
 
 const router = new VueRouter( {

@@ -4,11 +4,11 @@
         <v-card-title>
             Add Group
             <v-spacer/>
-            <v-btn @click="closeDialog" color="red" icon>
+            <v-btn @click="hideDialog" color="red" icon>
                 <v-icon>mdi-close</v-icon>
             </v-btn>
         </v-card-title>
-            <v-form @submit.prevent="() => handleSubmit(props.closeDialog)" ref="form">
+            <v-form @submit.prevent="onSubmit" ref="form">
                 <v-card-text>
                     <v-row>
                         <v-col>
@@ -61,12 +61,12 @@
                 this.$refs.form.reset();
                 this.handleInput(false);
             },
-            handleSubmit: function (callback) {
+            onSubmit: function () {
                 this.$apollo.mutate({mutation: ADD_GROUP, variables: this.group})
                     .then(() => {
                         this.$refs.form.reset();
                         this.$emit('after-submit');
-                        callback();
+                        this.hideDialog()
                     })
             }
         },

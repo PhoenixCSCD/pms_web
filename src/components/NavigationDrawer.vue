@@ -3,44 +3,32 @@
                          dark permanent>
         <template v-slot:prepend>
             <v-list-item>
-                <v-list-item-icon v-if="miniVariant">
-                    <v-responsive>
-                        <v-img contain src="@/assets/logos/logo_dark.svg"/>
-                    </v-responsive>
+                <v-list-item-icon @click="miniVariant = !miniVariant">
+                    <v-icon v-if="miniVariant">mdi-menu</v-icon>
+                    <v-icon v-else>mdi-menu-open</v-icon>
                 </v-list-item-icon>
-                <v-responsive v-else>
-                    <v-img contain height="20" src="@/assets/logos/logo.svg"/>
-                </v-responsive>
             </v-list-item>
-        </template>
-
-        <template v-slot:append>
-            <v-btn @click="miniVariant = !miniVariant" block color="transparent">
-                <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
         </template>
 
         <template style="overflow-y: hidden" v-for='section in sections'>
             <v-divider :key='section.title' style="border-color: rgba(255, 255, 255, .3)"/>
-            <v-list-item :key='item.title' :to='item.path' active-class="white--text" v-for='item in section.items'>
-                <v-list-item-icon>
-                    <v-icon>{{item.icon}}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>{{item.title}}</v-list-item-title>
-            </v-list-item>
+            <navigation-menu-item :key='item.title' v-for='item in section.items' :item="item">
+            </navigation-menu-item>
         </template>
     </v-navigation-drawer>
 </template>
 
 <script>
+    import NavigationMenuItem from '@/components/NavigationMenuItem';
     export default {
         name: 'NavigationDrawer',
+        components: {NavigationMenuItem},
         props: {
             value: Boolean
         },
         data() {
             return {
-                miniVariant: true,
+                miniVariant: false,
                 sections: [
                     {
                         title: 'transactions',
@@ -48,28 +36,33 @@
                             {
                                 title: 'Dashboard',
                                 icon: 'mdi-speedometer',
-                                path: {name: 'dashboard'}
+                                path: {name: 'dashboard'},
+                                permission: 'core.view_dashboard',
                             },
                             {
                                 title: 'Sales',
                                 icon: 'mdi-clipboard-text-outline',
-                                path: {name: 'list-sales'}
+                                path: {name: 'list-sales'},
+                                permission: 'dispensary.view_sale',
                             },
                             {
                                 title: 'Supplies',
                                 icon: 'mdi-clipboard-outline',
-                                path: {name: 'list-supplies'}
+                                path: {name: 'list-supplies'},
+                                permission: 'inventory.view_supply',
                             },
                             {
                                 title: 'Stock Adjustment',
                                 icon: 'mdi-book-open-outline',
-                                path: {name: 'list-stock-adjustments'}
+                                path: {name: 'list-stock-adjustments'},
+                                permission: 'inventory.view_stockadjustment',
                             },
                             {
                                 title: 'Expired Drugs',
                                 icon: 'mdi-pill',
-                                path: {name: 'dashboard'}
-                            },
+                                path: {name: 'dashboard'},
+                                permission: 'inventory.view_expireddrug'
+                            }
                         ]
                     },
                     {
@@ -78,49 +71,40 @@
                             {
                                 title: 'Drugs',
                                 icon: 'mdi-pill',
-                                path: {name: 'list-drugs'}
+                                path: {name: 'list-drugs'},
+                                permission: 'core.view_drug',
                             },
                             {
                                 title: 'Suppliers',
                                 icon: 'mdi-account-group',
-                                path: {name: 'dashboard'}
+                                path: {name: 'dashboard'},
+                                permission: 'core.view_supplier',
                             },
                             {
                                 title: 'Users',
                                 icon: 'mdi-account-group',
-                                path: {name: 'list-users'}
+                                path: {name: 'list-users'},
+                                permission: 'core.view_user',
                             },
                             {
                                 title: 'Groups',
                                 icon: 'mdi-account-cog-outline',
-                                path: {name: 'list-groups'}
-                            },
-                        ]
-                    },
-                    {
-                        title: 'add-ons',
-                        items: [
-                            {
-                                title: 'Mail',
-                                icon: 'mdi-mail',
-                                path: {name: 'dashboard'}
-                            },
-                            {
-                                title: 'Calender',
-                                icon: 'mdi-mail',
-                                path: {name: 'dashboard'}
-                            },
+                                path: {name: 'list-groups'},
+                                permission: 'core.view_group',
+                            }
                         ]
                     }
                 ]
-            }
+            };
         },
         methods: {
             handleInput(value) {
-                this.$emit('input', value)
+                this.$emit('input', value);
             }
+        },
+        mounted() {
         }
-    }
+    };
 </script>
 
 <style scoped>

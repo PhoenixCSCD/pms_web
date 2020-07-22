@@ -5,7 +5,7 @@
                 <v-layout align-center column>
                     <v-flex>
                         <v-card-text class="justify-center">
-                            <n-avatar :image="user.avatar"/>
+                            <n-avatar :src="user.avatar"/>
                         </v-card-text>
                     </v-flex>
                     <v-flex>
@@ -60,7 +60,6 @@
 
 <script>
     import {USER} from '@/graphql/queries'
-    import avatar from '@/assets/avatar.jpg'
     import NAvatar from '@/components/NAvatar';
 
     export default {
@@ -79,15 +78,12 @@
         data: function () {
             return {
                 user: {},
-                avatar: avatar
             }
         },
         methods: {
             handleInput: function (value) {
                 this.$emit('input', value);
             }
-        },
-        mounted() {
         },
         apollo: {
             user: {

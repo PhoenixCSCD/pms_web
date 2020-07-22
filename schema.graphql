@@ -1,301 +1,313 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: RootQuery
-    mutation: RootMutation
-    subscription: RootSubscription
+	query: RootQuery
+	mutation: RootMutation
+	subscription: RootSubscription
 }
 
 type AddAllergy {
-    allergy: AllergyType
+	allergy: AllergyType
 }
 
 type AddBranch {
-    branch: BranchType
+	branch: BranchType
 }
 
 type AddDrug {
-    drug: DrugType
+	drug: DrugType
 }
 
 type AddGroup {
-    group: GroupType
+	group: GroupType
 }
 
 type AddUser {
-    user: UserType
+	user: UserType
 }
 
 type AddUserBranchesMutation {
-    user: UserType
+	user: UserType
 }
 
 type AllergyType {
-    id: UUID!
-    name: String!
+	id: UUID!
+	name: String!
 }
 
 type AuthDataType {
-    avatar: String
-    branches: [BranchType!]!
-    dateOfBirth: Date!
-    email: String!
-    firstName: String!
-    gender: UserGender!
-    "The groups this user belongs to. A user will get all permissions granted to each of their groups."
-    groups: [GroupType!]!
-    id: UUID!
-    isStaff: Boolean!
-    "Designates that this user has all permissions without explicitly assigning them."
-    isSuperuser: Boolean!
-    lastLogin: DateTime
-    lastName: String!
-    phoneNumber: String!
-    saleSet: [SaleType!]!
-    stockadjustmentSet: [StockAdjustmentType!]!
-    supplySet: [SupplyType!]!
-    token: String
-    "Specific permissions for this user."
-    userPermissions: [PermissionType!]!
+	avatar: String
+	branches: [BranchType!]!
+	dateOfBirth: Date!
+	email: String!
+	firstName: String!
+	gender: UserGender!
+	"The groups this user belongs to. A user will get all permissions granted to each of their groups."
+	groups: [GroupType!]!
+	id: UUID!
+	isStaff: Boolean!
+	"Designates that this user has all permissions without explicitly assigning them."
+	isSuperuser: Boolean!
+	lastLogin: DateTime
+	lastName: String!
+	phoneNumber: String!
+	saleSet: [SaleType!]!
+	stockadjustmentSet: [StockAdjustmentType!]!
+	supplySet: [SupplyType!]!
+	token: String
+	"Specific permissions for this user."
+	userPermissions: [PermissionType!]!
 }
 
 type BranchType {
-    id: UUID!
-    name: String!
-    users: [AuthDataType!]!
+	id: UUID!
+	name: String!
+	users: [AuthDataType!]!
 }
 
 type DeleteGroup {
-    group: GroupType
+	group: GroupType
 }
 
 type DeleteGroups {
-    groups: [GroupType]
+	groups: [GroupType]
+}
+
+type DeleteUsers {
+	userIds: UUID
 }
 
 type DrugType {
-    costPricePerPack: Float!
-    id: UUID!
-    name: String!
-    quantityPerPack: Int!
-    salelineSet: [SaleLineType!]!
-    sellingPrice: Float!
-    stockadjustmentlineSet: [StockAdjustmentLineType!]!
-    supplylineSet: [SupplyLineType!]!
+	costPricePerPack: Float!
+	id: UUID!
+	name: String!
+	quantityPerPack: Int!
+	salelineSet: [SaleLineType!]!
+	sellingPrice: Float!
+	stockadjustmentlineSet: [StockAdjustmentLineType!]!
+	supplylineSet: [SupplyLineType!]!
 }
 
 type EditGroup {
-    group: GroupType
+	group: GroupType
+}
+
+type EditUser {
+	user: UserType
 }
 
 type GroupType {
-    id: ID!
-    name: String!
-    permissions: [PermissionType!]!
-    "The groups this user belongs to. A user will get all permissions granted to each of their groups."
-    userSet: [AuthDataType!]!
+	id: ID!
+	name: String!
+	permissions: [PermissionType!]!
+	"The groups this user belongs to. A user will get all permissions granted to each of their groups."
+	userSet: [AuthDataType!]!
 }
 
 "Obtain JSON Web Token mutation"
 type ObtainJSONWebToken {
-    payload: GenericScalar!
-    refreshExpiresIn: Int!
-    token: String!
+	payload: GenericScalar!
+	refreshExpiresIn: Int!
+	token: String!
 }
 
 type PermissionType {
-    codename: String!
-    groupSet: [GroupType!]!
-    id: ID!
-    name: String!
-    "Specific permissions for this user."
-    userSet: [AuthDataType!]!
+	codename: String!
+	groupSet: [GroupType!]!
+	id: ID!
+	name: String!
+	"Specific permissions for this user."
+	userSet: [AuthDataType!]!
 }
 
 type RecordSale {
-    sale: SaleType
+	sale: SaleType
 }
 
 type RecordStockAdjustment {
-    stockAdjustment: StockAdjustmentType
+	stockAdjustment: StockAdjustmentType
 }
 
 type RecordSupply {
-    supply: SupplyType
+	supply: SupplyType
 }
 
 type Refresh {
-    payload: GenericScalar!
-    refreshExpiresIn: Int!
-    token: String!
+	payload: GenericScalar!
+	refreshExpiresIn: Int!
+	token: String!
+}
+
+type ResetPassword {
+	ok: Boolean
 }
 
 type Revoke {
-    revoked: Int!
+	revoked: Int!
 }
 
 type RootMutation {
-    addAllergy(name: String): AddAllergy
-    addBranch(name: String): AddBranch
-    addDrug(costPricePerPack: Decimal, name: String, quantityPerPack: Int, sellingPrice: Decimal): AddDrug
-    addGroup(name: String, permissions: [Int]): AddGroup
-    addUser(avatar: String, dateOfBirth: Date, email: String, firstName: String, gender: String, groups: [Int], lastName: String, phoneNumber: String): AddUser
-    addUserBranches(branches: [UUID], userId: UUID): AddUserBranchesMutation
-    deleteGroup(groupId: Int): DeleteGroup
-    deleteGroups(groupIds: [Int]): DeleteGroups
-    editGroup(id: Int, name: String, permissions: [Int]): EditGroup
-    "Obtain JSON Web Token mutation"
-    obtainToken(email: String!, password: String!): ObtainJSONWebToken
-    recordSale(discount: Decimal!, saleLines: [SaleLineInputType], timestamp: DateTime!): RecordSale
-    recordStockAdjustment(reason: String!, stockAdjustmentLines: [StockAdjustmentLineInput], timestamp: DateTime!): RecordStockAdjustment
-    recordSupply(discount: Decimal!, freightCharge: Decimal!, supplier: String!, supplyDate: Date!, supplyLines: [SupplyLineInput]!, vat: Decimal!): RecordSupply
-    refreshToken(token: String): Refresh
-    revokeToken(refreshToken: String): Revoke
-    verifyPasswordResetToken(token: String!, userId: UUID!): VerifyPasswordResetToken
-    verifyToken(token: String): Verify
+	addAllergy(name: String): AddAllergy
+	addBranch(name: String): AddBranch
+	addDrug(costPricePerPack: Decimal, name: String, quantityPerPack: Int, sellingPrice: Decimal): AddDrug
+	addGroup(name: String, permissions: [Int]): AddGroup
+	addUser(avatar: String, dateOfBirth: Date, email: String, firstName: String, gender: String, groups: [Int], lastName: String, phoneNumber: String): AddUser
+	addUserBranches(branches: [UUID], userId: UUID): AddUserBranchesMutation
+	deleteGroup(groupId: Int): DeleteGroup
+	deleteGroups(groupIds: [Int]): DeleteGroups
+	deleteUsers(userIds: [UUID]): DeleteUsers
+	editGroup(id: Int, name: String, permissions: [Int]): EditGroup
+	editUser(avatar: String, dateOfBirth: Date, email: String, firstName: String, gender: String, groups: [Int], lastName: String, phoneNumber: String, userId: UUID): EditUser
+	"Obtain JSON Web Token mutation"
+	obtainToken(email: String!, password: String!): ObtainJSONWebToken
+	recordSale(discount: Decimal!, saleLines: [SaleLineInputType], timestamp: DateTime!): RecordSale
+	recordStockAdjustment(reason: String!, stockAdjustmentLines: [StockAdjustmentLineInput], timestamp: DateTime!): RecordStockAdjustment
+	recordSupply(discount: Decimal!, freightCharge: Decimal!, supplier: String!, supplyDate: Date!, supplyLines: [SupplyLineInput]!, vat: Decimal!): RecordSupply
+	refreshToken(token: String): Refresh
+	resetPassword(email: String, password: String, token: String): ResetPassword
+	revokeToken(refreshToken: String): Revoke
+	verifyToken(token: String): Verify
 }
 
 type RootQuery {
-    allergies: [AllergyType]
-    branches: [BranchType]
-    drugLotNumbers(drugId: UUID!): [String]
-    drugs: [DrugType]
-    groupById(groupId: Int): GroupType
-    groups: [GroupType]
-    hasPermission(permission: String): Boolean
-    me: UserType
-    permissions: [PermissionType]
-    sales: [SaleType]
-    stockLevel(drugId: UUID!, lotNumber: String): Int
-    supplies: [SupplyType]
-    todaySales: [SaleType]
-    userByEmail(email: String): UserType
-    userById(userId: UUID): UserType
-    users: [UserType]
+	allergies: [AllergyType]
+	branches: [BranchType]
+	drugLotNumbers(drugId: UUID!): [String]
+	drugs: [DrugType]
+	emailExists(email: String): Boolean
+	groupById(groupId: Int): GroupType
+	groups: [GroupType]
+	hasPermission(permission: String): Boolean
+	me: UserType
+	passwordResetTokenIsValid(email: String, token: String): Boolean
+	permissions: [PermissionType]
+	sales: [SaleType]
+	stockLevel(drugId: UUID!, lotNumber: String): Int
+	supplies: [SupplyType]
+	todaySales: [SaleType]
+	userByEmail(email: String): UserType
+	userById(userId: UUID): UserType
+	users: [UserType]
 }
 
 type RootSubscription {
-    hello: String
-    lotStockLevel(drugId: UUID!, lotNumber: String!): Int
-    stockLevel(drugId: UUID!): Int
+	hello: String
+	lotStockLevel(drugId: UUID!, lotNumber: String!): Int
+	stockLevel(drugId: UUID!): Int
 }
 
 type SaleLineType {
-    drug: DrugType!
-    id: UUID!
-    quantity: Int!
-    sale: SaleType!
-    sellingPrice: Float!
+	drug: DrugType!
+	id: UUID!
+	quantity: Int!
+	sale: SaleType!
+	sellingPrice: Float!
 }
 
 type SaleType {
-    attendant: AuthDataType!
-    discount: Float!
-    grandTotal: Float!
-    id: UUID!
-    saleLines: [SaleLineType!]!
-    subTotal: Float!
-    timestamp: DateTime!
+	attendant: AuthDataType!
+	discount: Float!
+	grandTotal: Float!
+	id: UUID!
+	saleLines: [SaleLineType!]!
+	subTotal: Float!
+	timestamp: DateTime!
 }
 
 type StockAdjustmentLineType {
-    drug: DrugType!
-    id: UUID!
-    lotNumber: String!
-    quantity: Int!
-    stockAdjustment: StockAdjustmentType!
+	drug: DrugType!
+	id: UUID!
+	lotNumber: String!
+	quantity: Int!
+	stockAdjustment: StockAdjustmentType!
 }
 
 type StockAdjustmentType {
-    id: UUID!
-    reason: String!
-    stockadjustmentlineSet: [StockAdjustmentLineType!]!
-    timestamp: DateTime!
-    user: AuthDataType!
+	id: UUID!
+	reason: String!
+	stockadjustmentlineSet: [StockAdjustmentLineType!]!
+	timestamp: DateTime!
+	user: AuthDataType!
 }
 
 type SupplyLineType {
-    costPrice: Float!
-    drug: DrugType!
-    expiryDate: Date!
-    id: UUID!
-    lotNumber: String!
-    quantity: Int!
-    supply: SupplyType!
+	costPrice: Float!
+	drug: DrugType!
+	expiryDate: Date!
+	id: UUID!
+	lotNumber: String!
+	quantity: Int!
+	supply: SupplyType!
 }
 
 type SupplyType {
-    discount: Float!
-    freightCharge: Float!
-    grandTotal: Float!
-    id: UUID!
-    receiver: AuthDataType!
-    subTotal: Float!
-    supplier: String!
-    supplyDate: Date!
-    supplyLines: [SupplyLineType!]!
-    vat: Float!
+	discount: Float!
+	freightCharge: Float!
+	grandTotal: Float!
+	id: UUID!
+	receiver: AuthDataType!
+	subTotal: Float!
+	supplier: String!
+	supplyDate: Date!
+	supplyLines: [SupplyLineType!]!
+	vat: Float!
 }
 
 type UserType {
-    avatar: String
-    branches: [BranchType!]!
-    dateOfBirth: Date!
-    email: String!
-    firstName: String!
-    gender: UserGender!
-    "The groups this user belongs to. A user will get all permissions granted to each of their groups."
-    groups: [GroupType!]!
-    id: UUID!
-    isStaff: Boolean!
-    "Designates that this user has all permissions without explicitly assigning them."
-    isSuperuser: Boolean!
-    lastLogin: DateTime
-    lastName: String!
-    password: String!
-    phoneNumber: String!
-    saleSet: [SaleType!]!
-    stockadjustmentSet: [StockAdjustmentType!]!
-    supplySet: [SupplyType!]!
-    "Specific permissions for this user."
-    userPermissions: [PermissionType!]!
+	avatar: String
+	branches: [BranchType!]!
+	dateOfBirth: Date!
+	email: String!
+	firstName: String!
+	gender: UserGender!
+	"The groups this user belongs to. A user will get all permissions granted to each of their groups."
+	groups: [GroupType!]!
+	id: UUID!
+	isStaff: Boolean!
+	"Designates that this user has all permissions without explicitly assigning them."
+	isSuperuser: Boolean!
+	lastLogin: DateTime
+	lastName: String!
+	password: String!
+	phoneNumber: String!
+	saleSet: [SaleType!]!
+	stockadjustmentSet: [StockAdjustmentType!]!
+	supplySet: [SupplyType!]!
+	"Specific permissions for this user."
+	userPermissions: [PermissionType!]!
 }
 
 type Verify {
-    payload: GenericScalar!
-}
-
-type VerifyPasswordResetToken {
-    valid: Boolean
+	payload: GenericScalar!
 }
 
 "An enumeration."
 enum UserGender {
-    "Female"
-    F
-    "Male"
-    M
+	"Female"
+	F
+	"Male"
+	M
 }
 
 input SaleLineInputType {
-    drugId: UUID!
-    id: UUID
-    quantity: Decimal!
-    sellingPrice: Decimal!
+	drugId: UUID!
+	id: UUID
+	quantity: Decimal!
+	sellingPrice: Decimal!
 }
 
 input StockAdjustmentLineInput {
-    drugId: UUID!
-    lotNumber: String!
-    quantity: Int!
+	drugId: UUID!
+	lotNumber: String!
+	quantity: Int!
 }
 
 input SupplyLineInput {
-    costPrice: Decimal!
-    drugId: UUID!
-    expiryDate: Date!
-    lotNumber: String!
-    quantity: Int!
+	costPrice: Decimal!
+	drugId: UUID!
+	expiryDate: Date!
+	lotNumber: String!
+	quantity: Int!
 }
 
 

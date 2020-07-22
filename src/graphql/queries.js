@@ -21,6 +21,7 @@ export const USER = gql`query ($id: UUID!) {
         dateOfBirth
         email
         phoneNumber
+        avatar
         groups {
             id
             name
@@ -120,4 +121,18 @@ export const SALES = gql`{
            sellingPrice
        }
    } 
+}`;
+
+export const EMAIL_EXISTS = gql`query ($email: String!){
+    emailExists(email: $email)
+}`
+
+export const USER_BY_EMAIL = gql`query ($email: String!) {
+    userByEmail(email: $email) {
+        id
+    }
+}`;
+
+export const PASSWORD_RESET_TOKEN_IS_VALID = gql`query ($email: String!, $token: String!) {
+   passwordResetTokenIsValid(email: $email, token: $token) 
 }`;

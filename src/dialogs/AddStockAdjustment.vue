@@ -26,7 +26,7 @@
                             </v-col>
                             <v-col>
                                 <validation-provider rules="required" v-slot="{errors}">
-                                    <v-text-field :error-messages="errors" dense hide-details="auto" label="Time"
+                                    <v-text-field :error-messages="errors" dense hide-details="auto" label="Reason"
                                                   outlined v-model="form.stockAdjustment.reason"/>
                                 </validation-provider>
                             </v-col>

@@ -1,14 +1,14 @@
 <template>
-    <v-container fluid class="pa-10">
+    <v-container class="pa-10" fluid>
         <v-row>
             <y-date-field label="Start Date"/>
         </v-row>
         <v-row>
             <v-col>
                 <v-card height="100">
-                    <v-sheet color="green" height="100" width="100" class="py-5"
-                             style="text-align: center; position: absolute">
-                        <v-icon size="64" color="white">mdi-chart-timeline-variant</v-icon>
+                    <v-sheet class="py-5" color="green" height="100" style="text-align: center; position: absolute"
+                             width="100">
+                        <v-icon color="white" size="64">mdi-chart-timeline-variant</v-icon>
                     </v-sheet>
                     <div class="">
                         <span class="d-flex justify-end pa-2 display-2" style="">312</span>
@@ -19,9 +19,9 @@
             </v-col>
             <v-col>
                 <v-card height="100">
-                    <v-sheet color="orange" height="100" width="100" class="py-5"
-                             style="text-align: center; position: absolute">
-                        <v-icon size="64" color="white">mdi-cart-arrow-up</v-icon>
+                    <v-sheet class="py-5" color="orange" height="100" style="text-align: center; position: absolute"
+                             width="100">
+                        <v-icon color="white" size="64">mdi-cart-arrow-up</v-icon>
                     </v-sheet>
                     <div class="">
                         <span class="d-flex justify-end pa-2 display-1" style="">312</span>
@@ -32,9 +32,9 @@
             </v-col>
             <v-col>
                 <v-card height="100">
-                    <v-sheet color="primary" height="100" width="100" class="py-5"
-                             style="text-align: center; position: absolute">
-                        <v-icon size="64" color="white">mdi-cart-arrow-down</v-icon>
+                    <v-sheet class="py-5" color="primary" height="100" style="text-align: center; position: absolute"
+                             width="100">
+                        <v-icon color="white" size="64">mdi-cart-arrow-down</v-icon>
                     </v-sheet>
                     <div class="">
                         <span class="d-flex justify-end pa-2 display-1" style="">312</span>
@@ -45,9 +45,9 @@
             </v-col>
             <v-col>
                 <v-card height="100">
-                    <v-sheet color="red" height="100" width="100" class="py-5"
-                             style="text-align: center; position: absolute">
-                        <v-icon size="64" color="white">mdi-cash-multiple</v-icon>
+                    <v-sheet class="py-5" color="red" height="100" style="text-align: center; position: absolute"
+                             width="100">
+                        <v-icon color="white" size="64">mdi-cash-multiple</v-icon>
                     </v-sheet>
                     <div class="">
                         <span class="d-flex justify-end pa-2 display-1" style="">312</span>
@@ -71,11 +71,11 @@
                 dataTable: {
                     headers: [
                         {text: 'User', value: 'userFullName'},
-                        {text: 'Drug', value: 'drugName'},
+                        {text: 'Drug', value: 'drugName'}
                         // {text: }
                     ]
                 }
-            }
+            };
         },
         mounted() {
             this.$utils.setPageTitle('Dashboard');
@@ -83,7 +83,7 @@
             this.$topBar.disableDelete();
             this.$topBar.disableRefresh();
         }
-    }
+    };
 </script>
 
 <style scoped>

@@ -5,7 +5,8 @@
 </template>
 
 <script>
-    import AddStockAdjustment from "@/dialogs/AddStockAdjustment";
+    import AddStockAdjustment from '@/dialogs/AddStockAdjustment';
+
     export default {
         name: 'ListStockAdjustments',
         components: {AddStockAdjustment},
@@ -21,7 +22,7 @@
         data: () => ({
             addDialog: false
         })
-    }
+    };
 </script>
 
 <style scoped>

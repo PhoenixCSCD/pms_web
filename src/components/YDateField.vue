@@ -4,9 +4,9 @@
         <v-date-picker :max="max" :min="min" :value="value"
                        @input="input" landscape reactive/>
         <template v-slot:activator="{ on }">
-            <v-text-field :dense="dense" :label=label :outlined=outlined
-                          :value="value" hide-details="auto" :error-messages="errorMessages"
-                          readonly :rules="rules"
+            <v-text-field :dense="dense" :error-messages="errorMessages" :label=label
+                          :outlined=outlined :rules="rules" :value="value"
+                          hide-details="auto" readonly
                           v-on="on"/>
         </template>
     </v-menu>
@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        name: "YDateField",
+        name: 'YDateField',
         props: {
             value: String,
             min: {
@@ -44,14 +44,14 @@
             errorMessages: {
                 type: Array,
                 required: false
-    }
+            }
         },
         methods: {
             input: function (value) {
                 this.$emit('input', value);
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
