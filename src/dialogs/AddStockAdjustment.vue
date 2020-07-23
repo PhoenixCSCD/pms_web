@@ -160,7 +160,7 @@
             getLotNumbers: function (item) {
                 item.lotNumber = undefined;
                 this.getDrugLotStockLevel(item);
-               this.$apollo.query({query: DRUG_LOT_NUMBERS, variables: {drugId: item.drugId}})
+               this.$apollo.query({query: DRUG_LOT_NUMBERS, variables: {drugId: item.drugId}, fetchPolicy: 'no-cache'})
                .then((response => {
                    item.lotNumberOptions = response['data']['drugLotNumbers'];
                }))
