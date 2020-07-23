@@ -17,6 +17,7 @@
                         </v-btn>
                     </template>
                 </v-data-table>
+                <v-pagination :length="dataTable.pageCount" v-if="dataTable.pageCount > 1" v-model="dataTable.page"/>
             </v-card>
         </v-flex>
         <add-supply v-model="addDialog" @submit="$apollo.queries.supplies.refetch()"/>
