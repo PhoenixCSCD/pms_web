@@ -1,6 +1,6 @@
 <template>
     <v-dialog :value="value" persistent width="800">
-        <v-card>
+        <v-card :disabled="$apollo.loading" :loading="$apollo.loading">
             <v-card-title>
                 Add User
                 <v-spacer/>
@@ -9,8 +9,8 @@
                 </v-btn>
             </v-card-title>
             <v-divider/>
-            <validation-observer ref="form" v-slot="{invalid}">
-                <v-form @submit.prevent="onSubmit">
+            <validation-observer ref="validator" v-slot="{invalid}">
+                <v-form @submit.prevent="onSubmit" ref="form">
                     <v-card-text>
                         <v-row>
                             <v-col md="8">
@@ -91,11 +91,14 @@
                             <v-col>
                                 <v-layout align-center column fill-height justify-center>
                                     <v-flex class="d-flex align-center">
-                                        <input @change="onChangeAvatar" class="hidden-file-input" id="avatar"
+                                        <input @change="onChangeAvatar" class="hidden-file-input" id="add-user-avatar"
                                                name="avatar"
                                                type="file"/>
-                                        <label for="avatar" style="display: inline; border-radius: 100%">
-                                            <n-avatar :src="avatarPreview" :loading="uploadingAvatar"/>
+                                        <label for="add-user-avatar" style="display: inline; border-radius: 100%">
+                                            <v-avatar color="primary" :height="200" :width="200">
+                                                <v-img :src="avatarPreview" v-if="avatarPreview"/>
+                                                <v-icon color="white" large v-else>mdi-account</v-icon>
+                                            </v-avatar>
                                         </label>
                                     </v-flex>
                                     <v-flex>
@@ -121,7 +124,6 @@
     import {GENDER} from '@/options';
     import {ADD_USER} from '@/graphql/mutations';
     import {EMAIL_EXISTS, GROUPS} from '@/graphql/queries';
-    import NAvatar from '@/components/NAvatar';
     import {extend} from 'vee-validate';
     import {email, required} from 'vee-validate/dist/rules';
     import {createClient} from '@/vue-apollo';
@@ -148,7 +150,6 @@
     });
     export default {
         name: 'AddUser',
-        components: {NAvatar},
         props: {
             value: {
                 type: Boolean,
@@ -193,7 +194,10 @@
                 this.$emit('input', value);
             },
             hideDialog: function () {
+                this.avatarPreview = undefined;
+                this.user.avatar = null;
                 this.$refs.form.reset();
+                this.$refs.validator.reset();
                 this.handleInput(false);
             },
             onSubmit: function () {

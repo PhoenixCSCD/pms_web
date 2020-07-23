@@ -1,6 +1,6 @@
 <template>
     <v-dialog :value="value" persistent width="800">
-        <v-card>
+        <v-card :disabled="$apollo.loading" :loading="$apollo.loading">
             <v-card-title>
                 Edit User
                 <v-spacer/>
@@ -86,11 +86,14 @@
                         <v-col>
                             <v-layout align-center column fill-height justify-center>
                                 <v-flex class="d-flex align-center">
-                                    <input @change="onChangeAvatar" class="hidden-file-input" id="avatar"
+                                    <input @change="onChangeAvatar" class="hidden-file-input" id="edit-user-avatar"
                                            name="avatar"
                                            type="file"/>
-                                    <label for="avatar" style="display: inline; border-radius: 100%">
-                                        <n-avatar :src="avatarPreview"/>
+                                    <label for="edit-user-avatar" style="display: inline; border-radius: 100%">
+                                        <v-avatar color="primary" :height="200" :width="200">
+                                            <v-img :src="avatarPreview" v-if="avatarPreview"/>
+                                            <v-icon color="white" large v-else>mdi-account</v-icon>
+                                        </v-avatar>
                                     </label>
                                 </v-flex>
                                 <v-flex>
@@ -116,7 +119,6 @@
     import {EDIT_USER} from '@/graphql/mutations';
     import {GROUPS, USER, USER_BY_EMAIL} from '@/graphql/queries';
     import {GENDER} from '@/options';
-    import NAvatar from '@/components/NAvatar';
     import {extend} from 'vee-validate';
     import {email, required} from 'vee-validate/dist/rules';
     import {createClient} from '@/vue-apollo';
@@ -145,7 +147,6 @@
 
     export default {
         name: 'EditUser',
-        components: { NAvatar },
         props: {
             value: {
                 type: Boolean,
@@ -194,6 +195,7 @@
                 this.handleInput( false );
             },
             onChangeAvatar: function (e) {
+                console.log(e.target.files[0]);
                 if (e.target.files[0]) {
                     this.user.avatar = e.target.files[0];
                     this.avatarPreview = URL.createObjectURL(e.target.files[0]);
