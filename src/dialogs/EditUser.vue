@@ -195,7 +195,6 @@
                 this.handleInput( false );
             },
             onChangeAvatar: function (e) {
-                console.log(e.target.files[0]);
                 if (e.target.files[0]) {
                     this.user.avatar = e.target.files[0];
                     this.avatarPreview = URL.createObjectURL(e.target.files[0]);
