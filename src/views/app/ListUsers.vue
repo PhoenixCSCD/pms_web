@@ -1,7 +1,7 @@
 <template>
     <v-layout class="justify-center align-center py-10">
         <v-flex class="md12 px-12">
-            <v-card outlined>
+            <v-card outlined :disabled="$apollo.loading">
 <!--                <v-skeleton-loader type="table-tbody" v-if="$apollo.loading"></v-skeleton-loader>-->
                 <v-data-table :headers="dataTable.headers" :items="users" :items-per-page="50"
                               :page.sync="dataTable.page"
@@ -120,7 +120,7 @@
             handleDeleteConfirmed: function () {
                 this.deleteDialog = false;
                 this.$apollo.mutate({mutation: DELETE_USERS, variables: {userIds: [this.activeUserId]}})
-                this.$apollo.queries.users.refetch();
+                .then(() => this.$apollo.queries.users.refetch())
             },
             handleDeleteCancelled: function () {
                 this.deleteDialog = false;
