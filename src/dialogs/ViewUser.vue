@@ -75,11 +75,6 @@
                 required: false,
             }
         },
-        watch: {
-            'user.avatar': (val) => {
-                console.log(val);
-            }
-        },
         data: function () {
             return {
                 user: {},
