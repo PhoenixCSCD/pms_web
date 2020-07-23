@@ -2,7 +2,7 @@
     <v-dialog :value="value" persistent scrollable width="80%">
         <v-card>
             <v-card-title>
-                Record Sale
+                Record Supply
                 <v-spacer/>
                 <v-btn @click="closeDialog" color="red" icon>
                     <v-icon>mdi-close</v-icon>
@@ -20,10 +20,12 @@
                                           v-model="supply.supplier"/>
                         </v-col>
                         <v-col cols="1">
-                            <v-text-field dense hide-details="auto" label="VAT (%)" outlined v-model="supply.vatRate" @input="computeVat"/>
+                            <v-text-field @input="computeVat" dense hide-details="auto" label="VAT (%)" outlined
+                                          v-model="supply.vatRate"/>
                         </v-col>
                         <v-col cols="1">
-                            <v-text-field dense hide-details="auto" label="VAT (GHS)" outlined v-model="supply.vat" @input="computeVatRate"/>
+                            <v-text-field @input="computeVatRate" dense hide-details="auto" label="VAT (GHS)" outlined
+                                          v-model="supply.vat"/>
                         </v-col>
                         <v-col cols="1">
                             <v-text-field dense hide-details="auto" label="Freight Charge" outlined
@@ -45,11 +47,13 @@
                 </v-container>
                 <v-divider/>
                 <v-card-text style="height: 50vh; overflow-y: auto">
-                    <v-data-table :headers="dataTable.headers" :items="supply.supplyLines" @item-selected="selectSupplyLine"
+                    <v-data-table :headers="dataTable.headers" :items="supply.supplyLines"
+                                  @item-selected="selectSupplyLine"
                                   @toggle-select-all="selectSupplyLines" hide-default-footer item-key="id"
                                   show-select>
                         <template v-slot:item.drug="{item}">
-                            <v-autocomplete :items="drugs" @input="(drugId) => presetRowData(item.id, drugId)" dense hide-details item-text="name"
+                            <v-autocomplete :items="drugs" @input="(drugId) => presetRowData(item.id, drugId)" dense
+                                            hide-details item-text="name"
                                             item-value="id" outlined
                                             v-model="item.drugId"/>
                         </template>
@@ -69,7 +73,7 @@
                 </v-card-text>
                 <v-divider/>
                 <v-card-actions>
-                    <v-btn color="red" dark outlined @click="() => {clearForm(); closeDialog();}">Cancel</v-btn>
+                    <v-btn @click="() => {clearForm(); closeDialog();}" color="red" dark outlined>Cancel</v-btn>
                     <v-spacer/>
                     <v-btn-toggle dense rounded>
                         <v-btn @click="removeSupplyLines" icon>
@@ -163,6 +167,9 @@
                     variables: this.cleanSupplyData()
                 })
                     .then(() => {
+                        this.$emit('submit');
+                        this.clearForm();
+                        this.closeDialog();
                     });
             },
             addSupplyLine: function () {
@@ -204,12 +211,12 @@
             subTotal: function () {
                 return this.supply.supplyLines.reduce((accumulator, currentValue) =>
                     accumulator + currentValue.costPrice * currentValue.quantity
-                , 0)
+                    , 0);
             },
             grandTotal: function () {
                 return this.subTotal + parseInt(this.supply.vat) + parseInt(this.supply.freightCharge) - parseInt(this.supply.discount);
             }
-        },
+        }
     };
 </script>
 
