@@ -136,3 +136,32 @@ export const USER_BY_EMAIL = gql`query ($email: String!) {
 export const PASSWORD_RESET_TOKEN_IS_VALID = gql`query ($email: String!, $token: String!) {
    passwordResetTokenIsValid(email: $email, token: $token) 
 }`;
+
+export const SUPPLIES = gql`{
+    supplies {
+        id
+        discount
+        supplyDate
+        supplier
+        subTotal
+        grandTotal
+        freightCharge
+        vat
+        receiver {
+            firstName
+            lastName
+        }
+    }
+}`
+
+export const STOCK_ADJUSTMENTS = gql`{
+    stockAdjustments {
+        id
+        timestamp
+        reason
+        user {
+            firstName
+            lastName
+        }
+    }
+}`;

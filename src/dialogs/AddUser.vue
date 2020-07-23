@@ -1,6 +1,6 @@
 <template>
     <v-dialog :value="value" persistent width="800">
-        <v-card :disabled="$apollo.loading" :loading="$apollo.loading">
+        <v-card :disabled="$apollo.loading || loading" :loading="$apollo.loading || loading">
             <v-card-title>
                 Add User
                 <v-spacer/>
@@ -158,6 +158,7 @@
         },
         data: function () {
             return {
+                loading: false,
                 avatarPreview: undefined,
                 genderOptions: GENDER || [],
                 groups: [],
@@ -203,11 +204,15 @@
             onSubmit: function () {
                 if (this.$utils.isValidHttpUrl(this.user.avatar)) this.save();
                 else {
+                    this.loading = true;
                     this.$utils.uploadFile(this.user.avatar)
                         .then(({url, secure_url}) => {
                             this.user.avatar = location.protocol === 'https:' ? secure_url : url;
                             this.save();
-                        });
+                        })
+                    .finally(() => {
+                        this.loading = false;
+                    })
                 }
             },
             save: function () {

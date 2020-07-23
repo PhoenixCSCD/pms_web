@@ -182,6 +182,7 @@ type RootQuery {
 	passwordResetTokenIsValid(email: String, token: String): Boolean
 	permissions: [PermissionType]
 	sales: [SaleType]
+	stockAdjustments: [StockAdjustmentType]
 	stockLevel(drugId: UUID!, lotNumber: String): Int
 	supplies: [SupplyType]
 	todaySales: [SaleType]
@@ -318,18 +319,18 @@ in fields, resolvers and input.
 scalar UUID
 
 """
-The `Date` scalar type represents a Date
-value as specified by
-[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
-"""
-scalar Date
-
-"""
 The `DateTime` scalar type represents a DateTime
 value as specified by
 [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
 """
 scalar DateTime
+
+"""
+The `Date` scalar type represents a Date
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar Date
 
 "The `Decimal` scalar type represents a python Decimal."
 scalar Decimal

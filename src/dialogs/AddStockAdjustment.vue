@@ -219,7 +219,7 @@
 
                     this.$apollo.mutate({mutation: RECORD_STOCK_ADJUSTMENT, variables: this.sanitizeForSubmit()})
                     .then(() => {
-                        this.$emit('complete-submit');
+                        this.$emit('submit');
                         this.resetForm();
                         this.closeDialog();
                     })
