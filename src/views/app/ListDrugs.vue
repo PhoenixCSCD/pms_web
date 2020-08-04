@@ -1,52 +1,90 @@
 <template>
-    <v-layout class="justify-center align-center py-12">
-        <v-flex class="md7">
-            <v-card outlined>
-                <v-data-table :headers="tableHeaders" :items="groups" caption="Drugs" item-key="id" show-select>
+    <v-layout class="justify-center align-center py-10">
+        <v-flex class="md12 px-12">
+            <v-card outlined :disabled="$apollo.loading">
+                <v-data-table :headers="dataTable.headers" :items="drugs"
+                              :loading="$apollo.loading" :page.sync="dataTable.page" :search="dataTable.search"
+                              @item-selected="selectRow" @page-count="dataTable.pageCount = $event" @toggle-select-all="selectAllRows" hide-default-footer
+                              item-key="id" show-select>
                     <template v-slot:item.actions="{}">
                         <v-btn color="orange" icon>
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
-                        <v-btn icon>
-                            <v-icon>mdi-filter</v-icon>
+                        <v-btn color="red" icon>
+                            <v-icon>mdi-delete</v-icon>
                         </v-btn>
                     </template>
                 </v-data-table>
             </v-card>
+            <v-pagination :length="dataTable.pageCount" v-if="dataTable.pageCount > 1" v-model="dataTable.page"/>
         </v-flex>
-        <add-del-speed-dial @addClick="handleAddClick" @delClick="handleDelClick"/>
+        <add-drug :active.sync="addDialog" @complete-submit="$apollo.queries.drugs.refetch()"/>
     </v-layout>
 </template>
 
 <script>
-    import AddDelSpeedDial from '@/components/AddDelSpeedDial';
+
+    import AddDrug from '@/dialogs/AddDrug';
+    import {DRUGS} from '@/graphql/queries';
 
     export default {
-        name: "ListDrugs",
-        components: {
-            AddDelSpeedDial,
-        },
-        data () {
+        name: 'ListDrugs',
+        components: {AddDrug},
+        data() {
             return {
-                fab: true,
-                groups: [],
-                tableHeaders: [
-                    { text: 'name', value: 'name' },
-                    // {text: 'Price (GHS)', value: 'price'},
-                    { text: 'Actions', value: 'actions' }
-                ],
+                addDialog: false,
+                dataTable: {
+                    page: 1,
+                    pageCount: 1,
+                    headers: [
+                        {text: 'Name', value: 'name'},
+                        {text: 'Selling Price', value: 'sellingPrice'},
+                        {text: 'Cost Price (Pack)', value: 'costPricePerPack'},
+                        {text: 'Qty Per Pack', value: 'quantityPerPack'},
+                        {text: 'Actions', value: 'actions'}
+                    ],
+                    selectedRows: [],
+                    search: ''
+                },
                 drugs: []
-            }
+            };
+        },
+        apollo: {
+            drugs: DRUGS
         },
         methods: {
+            selectRow: function (data) {
+                if (data.value)
+                    this.dataTable.selectedRows.push(data.item.id);
+                else
+                    this.dataTable.selectedRows = this.dataTable.selectedRows.filter(rowId => data.item.id !== rowId);
+            },
+            selectAllRows: function (data) {
+                data.items.forEach(item => this.selectRow({item: item, value: data.value}));
+            },
             handleAddClick: () => {
             },
             handleDelClick: () => {
             }
         },
-        mounted () {
+        watch: {
+            'dataTable.selectedRows': {
+                handler: function (selectedRows) {
+                    selectedRows.length === 0 ? this.$topBar.disableDelete() : this.$topBar.enableDelete();
+                },
+                immediate: true
+            }
+        },
+        mounted() {
+            this.$utils.setPageTitle('Drugs');
+            this.$topBar.enableAdd();
+            this.$topBar.enableRefresh();
+
+            this.$topBar.eventBus.$on('add', () => this.addDialog = true);
+            this.$topBar.eventBus.$on('refresh', () => this.$apollo.queries.drugs.refetch());
+            this.$topBar.eventBus.$on('search', (search) => this.dataTable.search = search);
         }
-    }
+    };
 </script>
 
 <style scoped>

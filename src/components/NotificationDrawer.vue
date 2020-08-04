@@ -21,52 +21,52 @@
 
 <script>
     export default {
-        name: "NotificationDrawer",
+        name: 'NotificationDrawer',
         props: {
             value: Boolean
         },
-        data () {
+        data() {
             return {
                 notifications: [
                     {
                         id: 0,
-                        message: "Welcome to PMS!",
-                        type: "success"
+                        message: 'Welcome to PMS!',
+                        type: 'success'
                     },
                     {
                         id: 1,
-                        message: "Welcome to PM! cvzdfg  xhz   dz  zg gzg  f gr b rg gdfg fdgs h th hhgfghs h gh sh g fg gs gs y",
-                        type: "error"
+                        message: 'Welcome to PM! cvzdfg  xhz   dz  zg gzg  f gr b rg gdfg fdgs h th hhgfghs h gh sh g fg gs gs y',
+                        type: 'error'
                     },
                     {
                         id: 2,
-                        message: "Welcome to PM!",
-                        type: "warning"
+                        message: 'Welcome to PM!',
+                        type: 'warning'
                     },
                     {
                         id: 3,
-                        message: "Welcome to PM!",
-                        type: "info"
+                        message: 'Welcome to PM!',
+                        type: 'info'
                     },
                     {
                         id: 4,
-                        message: "Welcome to PM!",
+                        message: 'Welcome to PM!'
                         // type: ""
                     }
                 ]
-            }
+            };
         },
         methods: {
-            handleInput ( value ) {
-                this.$emit( 'input', value );
+            handleInput(value) {
+                this.$emit('input', value);
             },
-            removeNotification ( id ) {
-                this.notifications = this.notifications.filter( notification => {
-                    return notification.id !== id
-                } );
+            removeNotification(id) {
+                this.notifications = this.notifications.filter(notification => {
+                    return notification.id !== id;
+                });
             }
         }
-    }
+    };
 </script>
 
 <style scoped>

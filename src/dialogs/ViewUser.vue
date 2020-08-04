@@ -5,7 +5,7 @@
                 <v-layout align-center column>
                     <v-flex>
                         <v-card-text class="justify-center">
-                            <n-avatar :image="user.avatar"/>
+                            <n-avatar :src="user.avatar"/>
                         </v-card-text>
                     </v-flex>
                     <v-flex>
@@ -60,12 +60,11 @@
 
 <script>
     import {USER} from '@/graphql/queries'
-    import avatar from '@/assets/avatar.jpg'
     import NAvatar from '@/components/NAvatar';
 
     export default {
         name: 'ViewUser',
-        components: { NAvatar },
+        components: {NAvatar},
         props: {
             value: {
                 type: Boolean,
@@ -79,25 +78,22 @@
         data: function () {
             return {
                 user: {},
-                avatar: avatar
             }
         },
         methods: {
-            handleInput: function ( value ) {
-                this.$emit( 'input', value );
+            handleInput: function (value) {
+                this.$emit('input', value);
             }
-        },
-        mounted () {
         },
         apollo: {
             user: {
                 query: USER,
                 update: data => data.userById,
                 skip: function () {
-                    return !this.userId
+                    return !this.userId || !this.value;
                 },
                 variables: function () {
-                    return { id: this.userId }
+                    return {id: this.userId}
                 }
             }
         }
@@ -107,3 +103,4 @@
 <style scoped>
 
 </style>
+<!--{"errors":[{"message":"(534, b'5.7.14 <https://accounts.google.com/signin/continue?sarp=1&scc=1&plt=AKgnsbu\\n5.7.14 X5zigM9x9EUFExhltrfpsLhNTBmlN74iQARKwKttDUg9aQpkTKCo9sDbziHsxtPZkmEVZ\\n5.7.14 35JxCGO0sYDy27WlHtF1-RMKc62CQTSzhiY5fNH6E2rQNXISFq5V6lvzUadzAyIl>\\n5.7.14 Please log in via your web browser and then try again.\\n5.7.14  Learn more at\\n5.7.14  https://support.google.com/mail/answer/78754 m32sm1917213qtd.94 - gsmtp')","locations":[{"line":2,"column":3}],"path":["addUser"]}],"data":{"addUser":null}}-->

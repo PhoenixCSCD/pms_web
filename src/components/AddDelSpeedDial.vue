@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: "AddDelSpeedDial",
+        name: 'AddDelSpeedDial',
         props: {
             addDisabled: {
                 type: Boolean,
@@ -28,20 +28,20 @@
                 default: false
             }
         },
-        data () {
+        data() {
             return {
                 speedDial: true
-            }
+            };
         },
         methods: {
             handleAddClick: function () {
-                this.$emit( 'addClick' );
+                this.$emit('addClick');
             },
             handleDelClick: function () {
-                this.$emit( 'delClick' );
+                this.$emit('delClick');
             }
         }
-    }
+    };
 </script>
 
 <style scoped>

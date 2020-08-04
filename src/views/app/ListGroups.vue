@@ -28,7 +28,7 @@
 
     export default {
         name: 'ListGroups',
-        components: { EditGroup, AddGroup },
+        components: {EditGroup, AddGroup},
         data: function () {
             return {
                 groups: [],
@@ -37,37 +37,37 @@
                 activeGroupId: '',
                 dataTable: {
                     headers: [
-                        { text: 'Name', value: 'name' },
-                        { text: 'Actions', value: 'actions', width: '20%' }
+                        {text: 'Name', value: 'name'},
+                        {text: 'Actions', value: 'actions', width: '20%'}
                     ]
-                },
-            }
+                }
+            };
         },
         methods: {
-            handleEditClick: function ( groupId ) {
+            handleEditClick: function (groupId) {
                 this.activeGroupId = groupId;
                 this.editDialog = true;
             },
-            handleDeleteClick: function ( groupId ) {
-                this.$apollo.mutate( { mutation: DELETE_GROUP, variables: {id: groupId} } )
-                    .then( () => this.$apollo.queries.groups.refetch() )
+            handleDeleteClick: function (groupId) {
+                this.$apollo.mutate({mutation: DELETE_GROUP, variables: {id: groupId}})
+                    .then(() => this.$apollo.queries.groups.refetch());
             }
         },
-        mounted () {
-            this.$utils.setPageTitle( 'Groups' );
+        mounted() {
+            this.$utils.setPageTitle('Groups');
             this.$topBar.enableRefresh();
             this.$topBar.enableAdd();
             this.$topBar.disableDelete();
-            this.$topBar.eventBus.$on( 'addClick', () => {
+            this.$topBar.eventBus.$on('add', () => {
                 this.addDialog = true;
-            } )
+            });
         },
         apollo: {
             groups: {
                 query: GROUPS
             }
         }
-    }
+    };
 </script>
 
 <style scoped>

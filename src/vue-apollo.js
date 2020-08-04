@@ -6,7 +6,7 @@ import {createApolloClient, restartWebsockets} from 'vue-cli-plugin-apollo/graph
 Vue.use( VueApollo );
 
 // Name of the localStorage item
-const AUTH_TOKEN = 'apollo-token';
+const AUTH_TOKEN = 'authToken';
 
 // Http endpoint
 const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:8000/graphql/';
@@ -17,8 +17,8 @@ const defaultOptions = {
     httpEndpoint,
     // You can use `wss` for secure connection (recommended in production)
     // Use `null` to disable subscriptions
-    // wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || 'ws://localhost:4000/graphql',
-    wsEndpoint: null,
+    wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || 'ws://localhost:8000/graphql/',
+    // wsEndpoint: null,
     // LocalStorage token
     tokenName: AUTH_TOKEN,
     // Enable Automatic Query persisting with Apollo Engine
@@ -61,7 +61,7 @@ export function createProvider ( options = {} ) {
         defaultClient: apolloClient,
         defaultOptions: {
             $query: {
-                // fetchPolicy: 'cache-and-network',
+                fetchPolicy: 'no-cache',
             },
         },
         errorHandler ( error ) {
@@ -73,11 +73,21 @@ export function createProvider ( options = {} ) {
     return apolloProvider
 }
 
+export function createClient(options = {}) {
+    const { apolloClient, wsClient } = createApolloClient({
+        ...defaultOptions,
+        ...options
+    });
+    apolloClient.wsClient = wsClient;
+
+    return apolloClient;
+}
+
 // Manually call this when user log in
-export async function onLogin ( apolloClient, token ) {
-    if ( typeof localStorage !== 'undefined' && token ) {
-        localStorage.setItem( AUTH_TOKEN, token )
-    }
+export async function onLogin ( apolloClient ) {
+    // if ( typeof localStorage !== 'undefined' && token ) {
+    //     localStorage.setItem( AUTH_TOKEN, token )
+    // }
     if ( apolloClient.wsClient ) restartWebsockets( apolloClient.wsClient );
     try {
         await apolloClient.resetStore()
